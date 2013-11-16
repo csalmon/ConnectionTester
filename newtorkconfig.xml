@@ -16,27 +16,28 @@
 			<contact-person></contact-person>
 			<contact-phone></contact-phone>
 		</contact-info>
-		<channel>
+		<listener>
 			<UUID></UUID>
-			<initiator>
-				<ip-address></ip-address>
-				<port></port>
-			</initiator>
-			<initiator>
-				<ip-address></ip-address>
-				<port></port>
-			</initiator>
-			<listener>
-				<ip-address></ip-address>
-				<port></port>
-			</listener>
-			<listener>
-				<ip-address></ip-address>
-				<port></port>
-			</listener>
-			<transport-protocol></transport-protocol>
-			<application-protocol></application-protocol>
-		</channel>
+			<ip-address></ip-address>
+			<port></port>
+		</listener>
+		<listener>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</listener>
+		<initiator>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</initiator>
+		<initiator>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</initiator>
+		<transport-protocol></transport-protocol>
+		<application-protocol></application-protocol>
 	</node>
 	<node>
 		<UUID>/<UUID>
@@ -54,26 +55,27 @@
 			<contact-person></contact-person>
 			<contact-phone></contact-phone>
 		</contact-info>
-		<channel>
+		<listener>
 			<UUID></UUID>
-			<initiator>
-				<ip-address></ip-address>
-				<port></port>
-			</initiator>
-			<initiator>
-				<ip-address></ip-address>
-				<port></port>
-			</initiator>
-			<listener>
-				<ip-address></ip-address>
-				<port></port>
-			</listener>
-			<listener>
-				<ip-address></ip-address>
-				<port></port>
-			</listener>
-			<transport-protocol></transport-protocol>
-			<application-protocol></application-protocol>
-		</channel>
+			<ip-address></ip-address>
+			<port></port>
+		</listener>
+		<listener>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</listener>
+		<initiator>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</initiator>
+		<initiator>
+			<UUID></UUID>
+			<ip-address></ip-address>
+			<port></port>
+		</initiator>
+		<transport-protocol></transport-protocol>
+		<application-protocol></application-protocol>
 	</node>
 </networkconfig>
