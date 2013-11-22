@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<networkconfig version="1.0">
+	<node>
+		<NUUID>38400000-8cf0-11bd-b23e-10b96e4ef000</NUUID>
+		<name>Node 1</name>
+		<operating-system>Mac OSX</operating-system>
+		<required-software>Postgres</required-software>
+		<external-ip>129.123.127.5</external-ip>
+		<external-ip>129.123.189.2</external-ip>
+		<internal-ip>192.168.13.6</internal-ip>
+		<security-zone>Alpha</security-zone>
+		<status></status>
+		<contact-info>
+			<organization>NSA</organization>
+			<contact-person>Bob Smith</contact-person>
+			<contact-phone>999-786-9996</contact-phone>
+		</contact-info>
+		<listener>
+			<LUUID>38400000-8cf0-11bd-b23e-10b96e4ef001</LUUID>
+			<lip-address>129.123.127.5</lip-address>
+			<lport>7777</lport>
+		</listener>
+		<initiator>
+			<IUUID>38400000-8cf0-11bd-b23e-10b96e4ef002</IUUID>
+			<iip-address>129.123.7.7</iip-address>
+			<iport>7777</iport>
+		</initiator>
+		<initiator>
+			<IUUID>38400000-8cf0-11bd-b23e-10b96e4ef003</IUUID>
+			<iip-address>129.123.189.2</iip-address>
+			<iport>7777</iport>
+		</initiator>
+		<transport-protocol>UDP</transport-protocol>
+		<application-protocol>MS Word</application-protocol>
+	</node>
+	<node>
+		<NUUID>38400000-8cf0-11bd-b23e-10b96e4ef004</NUUID>
+		<name>Node 2</name>
+		<operating-system>Windows</operating-system>
+		<required-software></required-software>
+		<external-ip>129.123.7.7</external-ip>
+		<internal-ip>192.168.78.3</internal-ip>
+		<security-zone>Whiskey</security-zone>
+		<status></status>
+		<contact-info>
+			<organization>CIA</organization>
+			<contact-person>Jack Bean</contact-person>
+			<contact-phone>878-000-9898</contact-phone>
+		</contact-info>
+		<listener>
+			<LUUID>38400000-8cf0-11bd-b23e-10b96e4ef005</LUUID>
+			<lip-address>129.123.7.7</lip-address>
+			<lport>7777</lport>
+		</listener>
+		<initiator>
+			<IUUID>38400000-8cf0-11bd-b23e-10b96e4ef006</IUUID>
+			<iip-address>129.123.127.5</iip-address>
+			<iport>7777</iport>
+		</initiator>
+		<transport-protocol>UDP</transport-protocol>
+		<application-protocol></application-protocol>
+	</node>
+</networkconfig>

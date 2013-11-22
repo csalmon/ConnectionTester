@@ -1,3 +1,6 @@
+package simulator;
+
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -26,8 +29,12 @@ public abstract class Channel {
 		this.buffer = null;
 	}
 	
-	public UUID getCID () {
+	public UUID getCID() {
 		return(this.cID);
+	}
+	
+	public void setCID(UUID pUUID) {
+		this.cID = pUUID;
 	}
 	
 	public int getInitiatorPort() {
