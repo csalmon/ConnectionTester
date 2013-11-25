@@ -1,8 +1,12 @@
+package simulator;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
+
+import enums.NodeState;
 
 public class Node {
 
@@ -43,6 +47,10 @@ public class Node {
 		return(nID);
 	}
 
+	public void setNID(UUID pUUID) {
+		this.nID = pUUID;
+	}
+	
 	public String getName() {
 		return(name);
 	}

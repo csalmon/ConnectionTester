@@ -1,3 +1,5 @@
+package simulator;
+
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -37,8 +39,16 @@ public class Listener extends Channel implements Runnable {
 			this.listen();
 			this.closeConnection();
         }
-        catch(Exception ex){
-        	ex.printStackTrace();
+        catch(Exception e){
+        	String why = null;
+            Throwable cause = e.getCause();
+            if (cause != null) {
+                why = cause.getMessage();
+            } else {
+                why = e.getMessage();
+            }
+            System.out.println("Exception thrown in run(): " + why);
+            
         }
 	}
 	
@@ -51,9 +61,19 @@ public class Listener extends Channel implements Runnable {
 		    this.channel.configureBlocking(false);   
 		    this.channel.register(this.channelMgr, this.channel.validOps());
 		    this._logger.debug("Listening channel is open.");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		} catch (Exception e) {
+			String why = null;
+            Throwable cause = e.getCause();
+            if (cause != null) {
+                why = cause.getMessage();
+            } else {
+                why = e.getMessage();
+            }
+            System.out.println("Exception thrown in openConnection(): " + why + "\n Here's the stacktrace: \n");
+            e.printStackTrace();
+            
+        }
+		
 	}
 	
 	private void listen() {
@@ -90,12 +110,11 @@ public class Listener extends Channel implements Runnable {
 	        		}
 	            }
 			}
+			this.channelMgr.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			if (this.channel.isConnected()) {
-				closeConnection();
-			}
 		}
+		
 	}
 	
 	private Message convertBufferToMessage(ByteBuffer pBuffer) {
@@ -107,13 +126,18 @@ public class Listener extends Channel implements Runnable {
 	}
 	
 	public void closeConnection() {
+		
 		try {
-			if (this.channel.isConnected()) { 
+			this._logger.debug("COnnection is closing.");
+			//if (this.channel.isConnected()) {
+				this._logger.debug("Connection is actually closed.");
+          		this.channel.socket().close();
           		this.channel.close();
           		this._logger.debug("Listening channel is closed.");
-			}
+			//}
 			this._logger.debug("Listener has completed listening.");
 		} catch (Exception ex) {
+			
 		}
 	}
 }

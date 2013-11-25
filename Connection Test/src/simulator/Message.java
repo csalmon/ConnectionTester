@@ -1,3 +1,5 @@
+package simulator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
