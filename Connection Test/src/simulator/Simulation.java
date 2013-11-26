@@ -10,6 +10,8 @@ public class Simulation implements Runnable {
 	Node lActiveNode = null;
 	Listener lTestListener = null;
 	Initiator lTestInitiator = null;
+	Logger _lLogger = null;
+	
 	public Simulation() {
 		
 	}
@@ -20,7 +22,7 @@ public class Simulation implements Runnable {
 			// Items marked with *** will really be used as constructor actions
 			// or as a call to the SimulatorPanel class when the NetworkConfiguration
 			// is loaded.  Here, these actions are just used to setup a driver program.
-			Logger _lLogger = Logger.getLogger(Simulation.class);
+			_lLogger = Logger.getLogger(Simulation.class);
 			int lNumNodes = 5;
 			// Size of file version + size of UUID + some extra
 			int lMessageSize = 20 + 16 + 64;
@@ -71,6 +73,7 @@ public class Simulation implements Runnable {
 			//ex.printStackTrace();
 			lActiveNode.stopListeners();
 			lActiveNode = null;
+			_lLogger = null;
 			System.out.println("Simulation interrupted");
 		}
 	}

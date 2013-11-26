@@ -31,7 +31,7 @@ public class FileUtility extends JPanel implements ActionListener {
 	private NetworkConfig networkConfig;
 
 	public FileUtility() {
-		setSize(259, 100);
+		setSize(259, 115);
 		setLocation(10, 11);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FormLayout(new ColumnSpec[] {

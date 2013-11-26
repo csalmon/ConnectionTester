@@ -38,12 +38,15 @@ public class HomeBlock extends JFrame {
 		TPanel = new Tester();
 		filePanel = new FileUtility();
 		activity = new Viewer();
+		activity.setLocation(279, 135);
 		nodeList = new EntityList();
+		nodeList.setLocation(10, 136);
 		console = new Console();
+		console.setLocation(279, 396);
 	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
-		tabbedPane.setBounds(279, 11, 495, 95);
+		tabbedPane.setBounds(279, 11, 495, 115);
 		
 		switch(role) {
 			case 0: {
@@ -56,11 +59,11 @@ public class HomeBlock extends JFrame {
 				break;
 			}
 			case 2: {
-				tabbedPane.add("Tester Panel", TPanel);
+				//tabbedPane.add("Tester Panel", TPanel);
 				break;
 			}
 			case 3: {
-				tabbedPane.add("Tester Panel", TPanel);
+				//tabbedPane.add("Tester Panel", TPanel);
 				break;
 			}
 			default: {

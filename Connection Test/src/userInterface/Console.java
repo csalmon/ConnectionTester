@@ -14,7 +14,7 @@ public class Console extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public Console() {
-		setBounds(279, 380, 495, 170);
+		setBounds(279, 380, 495, 155);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,

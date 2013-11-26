@@ -64,16 +64,7 @@ public class Tester extends JPanel implements ActionListener {
 				simulation = new Simulation();
 				simulationThread = new Thread(simulation);
 				simulationThread.start();
-				
-				try {
-					simulationThread.join();
-					simulationThread = null;
-					System.out.println("SimThread joined and nulled");
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+			
 			} else {
 				System.out.println("You pressed the start button but a simulation had already been ran." + 
 									"\nKilling previous simulation. Please run simulation again");
