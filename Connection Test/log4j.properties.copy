@@ -1,0 +1,52 @@
+# Root logger option
+# log4j.rootLogger=INFO, stdout
+
+# Direct log messages to stdout
+# log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+# log4j.appender.stdout.Target=System.out
+# log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+# log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p %F: %L - %m%n
+
+log4j.appender.simulation=org.apache.log4j.RollingFileAppender
+log4j.appender.simulation.File=simulation.log
+log4j.appender.simulation.MaxFileSize=2MB
+log4j.appender.simulation.append=false
+log4j.appender.simulation.MaxBackupIndex=2
+log4j.appender.simulation.layout = org.apache.log4j.PatternLayout
+log4j.appender.simulation.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p %F: %L - %m%n
+log4j.additivity.simulation = false
+log4j.appender.simulation.append = false
+log4j.category.simulator.Simulation = DEBUG, simulation
+
+log4j.appender.node=org.apache.log4j.RollingFileAppender
+log4j.appender.node.File=node.log
+log4j.appender.node.MaxFileSize=2MB
+log4j.appender.node.append=false
+log4j.appender.node.MaxBackupIndex=2
+log4j.appender.node.layout = org.apache.log4j.PatternLayout
+log4j.appender.node.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p %F: %L - %m%n
+log4j.additivity.node = false
+log4j.appender.node.append = false
+log4j.category.simulator.Node = DEBUG, node
+
+log4j.appender.initiator=org.apache.log4j.RollingFileAppender
+log4j.appender.initiator.File=initiator.log
+log4j.appender.initiator.MaxFileSize=2MB
+log4j.appender.initiator.append=false
+log4j.appender.initiator.MaxBackupIndex=2
+log4j.appender.initiator.layout = org.apache.log4j.PatternLayout
+log4j.appender.initiator.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p %F: %L - %m%n
+log4j.additivity.initiator = false
+log4j.appender.initiator.append = false
+log4j.category.simulator.Initiator = DEBUG, initiator
+
+log4j.appender.listener=org.apache.log4j.RollingFileAppender
+log4j.appender.listener.File=listener.log
+log4j.appender.listener.MaxFileSize=2MB
+log4j.appender.listener.append=false
+log4j.appender.listener.MaxBackupIndex=2
+log4j.appender.listener.layout = org.apache.log4j.PatternLayout
+log4j.appender.listener.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p %F: %L - %m%n
+log4j.additivity.listener = false
+log4j.appender.listener.append = false
+log4j.category.simulator.Listener = DEBUG, listener

@@ -14,7 +14,7 @@ public class EntityList extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public EntityList() {
-		setSize(259, 434);
+		setSize(259, 415);
 		setLocation(10, 117);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FormLayout(new ColumnSpec[] {

@@ -23,7 +23,7 @@ public class Viewer extends JPanel {
 	JLabel[][] nodeStatusLabels = null;
 	
 	public Viewer() {
-		setSize(495, 252);
+		setSize(495, 250);
 		setLocation(279, 117);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -73,12 +73,12 @@ public class Viewer extends JPanel {
 		add(lblSimulationActivity, "2, 2");
 		
 		int size = (int) Math.sqrt(numNodesInSimulation);
-		int counter = 0;
+		//int counter = 0;
 		nodeNameLabels = new JLabel[size][size];
 		nodeStatusLabels = new JLabel[size][size];
 		
-		int xCoor = 0; //col
-		int yCoor = 0; //row
+		//int xCoor = 0; //col
+		//int yCoor = 0; //row
 		//This nested loop adds 16 labels and their states to the Viewer object.
 		/*
 		for(int row = 0; row < size; row++) {
