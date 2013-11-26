@@ -75,7 +75,7 @@ public class FileUtility extends JPanel implements ActionListener {
 				if (browser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					xmlFile = browser.getSelectedFile();
 					this.networkConfig = new NetworkConfig(xmlFile.getAbsolutePath());
-					JOptionPane.showMessageDialog(null, "Loaded " + networkConfig.numNodes() + " nodes from the xml file.");
+					JOptionPane.showMessageDialog(null, "Loaded " + networkConfig.size() + " nodes from the xml file.");
 					
 					System.out.println("file chosen and loaded: " + xmlFile.getName());
 					System.out.println("file full path: " + xmlFile.toString());
