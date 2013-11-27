@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.UUID;
 
+import simulator.Channel;
 import simulator.ContactInfo;
 import simulator.Node;
 import simulator.Listener;
@@ -27,6 +28,8 @@ public class XMLLoader extends DefaultHandler {
     private Initiator currInitiator;
     private InetAddress channelAddr;
     private int channelPort;
+    private String channelTransport;
+    private String channelApplication;
     private String fileVersion;
     private final String NODE = new String("node");
     private final String LISTENER = new String("listener");
@@ -45,6 +48,8 @@ public class XMLLoader extends DefaultHandler {
         this.channelAddr = null;
         this.channelPort = 0;
         this.fileVersion = new String();
+        this.channelTransport = new String();
+        this.channelApplication = new String();
         initTags();
     }
 
@@ -97,17 +102,17 @@ public class XMLLoader extends DefaultHandler {
             System.out.println("New node added to network configuration.");
         } else if (this.LISTENER.equals(pQName)) {
             this.currListener.setListener(this.channelAddr, this.channelPort);
+            this.currListener.setTransportProtocol(this.channelTransport);
+            this.currListener.setApplicationProtocol(this.channelApplication);
             this.currNode.addListener(this.currListener);
-            this.currListener = null;
-            this.channelAddr = null;
-            this.channelPort = 0;
+            clearElementVariables(this.currInitiator);
             System.out.println("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
+            this.currInitiator.setTransportProtocol(this.channelTransport);
+            this.currInitiator.setApplicationProtocol(this.channelApplication);
             this.currNode.addInitiator(this.currInitiator);
-            this.currInitiator = null;
-            this.channelAddr = null;
-            this.channelPort = 0;
+            clearElementVariables(this.currInitiator);
             System.out.println("New initiator added to the node.");
         }
     }
@@ -157,18 +162,16 @@ public class XMLLoader extends DefaultHandler {
                     this.currNode.setContactInfo(info);
                 } else if (pProperty.equals("LUUID")) {
                     this.currListener.setCID(UUID.fromString(pValue));
-                } else if (pProperty.equals("lip-address")) {
+                } else if (pProperty.equals("ip-address")) {
                     this.channelAddr = InetAddress.getByName(pValue);
-                } else if (pProperty.equals("lport")) {
+                } else if (pProperty.equals("port")) {
                     this.channelPort = Integer.parseInt(pValue);
                 } else if (pProperty.equals("IUUID")) {
                     this.currInitiator.setCID(UUID.fromString(pValue));
-                } else if (pProperty.equals("iip-address")) {
-                    this.channelAddr = InetAddress.getByName(pValue);
-                } else if (pProperty.equals("iport")) {
-                    this.channelPort = Integer.parseInt(pValue);
                 } else if (pProperty.equals("transport-protocol")) {
+                	this.channelTransport = pValue;
                 } else if (pProperty.equals("application-protocol")) {
+                	this.channelApplication = pValue;
                 }
             }
         } catch (Exception ex) {
@@ -203,5 +206,13 @@ public class XMLLoader extends DefaultHandler {
         this.tagContainerList.add("node");
         this.tagContainerList.add("listener");
         this.tagContainerList.add("initiator");
+    }
+    
+    private void clearElementVariables(Channel pChannel) {
+    	pChannel = null;
+        this.channelAddr = null;
+        this.channelPort = 0;
+        this.channelTransport = new String();
+        this.channelApplication = new String();
     }
 }

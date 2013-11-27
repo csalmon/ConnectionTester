@@ -15,9 +15,7 @@ public abstract class Channel {
 	protected ByteBuffer buffer;
 	protected InetSocketAddress initiator;
 	protected InetSocketAddress listener;
-	//TODO:  Convert to object/java object?
 	protected String transportProtocol;
-	//TODO:  Convert to object/java object?
 	protected String applicationProtocol;
 	
 	public Channel(InetSocketAddress pInitiator, InetSocketAddress pListener) {

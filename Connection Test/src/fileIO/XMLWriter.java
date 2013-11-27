@@ -65,8 +65,8 @@ public class XMLWriter
 			{
 				xmlStr += "\t\t<listener>\r\n";
 				xmlStr += "\t\t\t<LUUID>" + currListener.getCID() + "</LUUID>\r\n";
-				xmlStr += "\t\t\t<lip-address>" + currListener.getListenerAddr() + "</lip-address>\r\n";
-				xmlStr += "\t\t\t<lport>" + currListener.getListenerPort() + "</lport>\r\n";
+				xmlStr += "\t\t\t<ip-address>" + currListener.getListenerAddr() + "</ip-address>\r\n";
+				xmlStr += "\t\t\t<port>" + currListener.getListenerPort() + "</port>\r\n";
 				xmlStr += "\t\t</listener>\r\n";
 			}
 			
@@ -75,8 +75,8 @@ public class XMLWriter
 			{
 			xmlStr += "\t\t<initiator>\r\n";
 			xmlStr += "\t\t\t<IUUID>" + currInitiator.getCID() + "</IUUID>\r\n";
-			xmlStr += "\t\t\t<iip-address>" + currInitiator.getInitiatorAddr() + "</iip-address>\r\n";
-			xmlStr += "\t\t\t<iport>" + currInitiator.getInitiatorPort() + "</iport>\r\n";
+			xmlStr += "\t\t\t<ip-address>" + currInitiator.getInitiatorAddr() + "</ip-address>\r\n";
+			xmlStr += "\t\t\t<port>" + currInitiator.getInitiatorPort() + "</port>\r\n";
 			xmlStr += "\t\t</initiator>\r\n";
 			}
 			
