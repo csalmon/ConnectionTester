@@ -36,17 +36,20 @@ public class HomeBlock extends JFrame {
 		
 		NEPanel = new NetworkEngineer();
 		TPanel = new Tester();
+		SOPanel = new SecurityOfficer();
+		MPanel = new Manager();
+		
 		filePanel = new FileUtility();
 		activity = new Viewer();
-		activity.setLocation(279, 135);
 		nodeList = new EntityList();
-		nodeList.setLocation(10, 136);
 		console = new Console();
-		console.setLocation(279, 396);
+		
+		filePanel.registerObserver(nodeList);
+		
 	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
-		tabbedPane.setBounds(279, 11, 495, 115);
+		
 		
 		switch(role) {
 			case 0: {
@@ -70,6 +73,11 @@ public class HomeBlock extends JFrame {
 				System.out.println("This really shouldn't be possible..");
 			}
 		}
+		
+		activity.setLocation(279, 135);
+		nodeList.setLocation(10, 136);
+		console.setLocation(279, 396);
+		tabbedPane.setBounds(279, 11, 495, 115);
 		
 		getContentPane().add(tabbedPane);
 		getContentPane().add(filePanel);

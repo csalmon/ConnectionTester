@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
@@ -12,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import observation.Observable;
+import observation.Observer;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -21,14 +25,18 @@ import com.jgoodies.forms.layout.RowSpec;
 import fileIO.NetworkConfig;
 import fileIO.XMLWriter;
 
-public class FileUtility extends JPanel implements ActionListener {
+public class FileUtility extends JPanel implements ActionListener, Observable {
 	private static final long serialVersionUID = 1L;
+	private final JFileChooser browser = new JFileChooser();
+	
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private NetworkConfig networkConfig = null;
+	
 	JButton loadBtn = null;
 	JButton saveBtn = null;
 	JLabel fileNameLbl = null;
-	final JFileChooser browser = new JFileChooser();
 	File xmlFile = null;
-	private NetworkConfig networkConfig;
+	
 
 	public FileUtility() {
 		setSize(259, 115);
@@ -62,8 +70,6 @@ public class FileUtility extends JPanel implements ActionListener {
 		
 		fileNameLbl = new JLabel(" ");
 		add(fileNameLbl, "4, 2, right, center");
-		
-		this.networkConfig = null;
 	}
 
 	@Override
@@ -81,6 +87,10 @@ public class FileUtility extends JPanel implements ActionListener {
 					System.out.println("file full path: " + xmlFile.toString());
 					String newLabelText = xmlFile.getName();
 					fileNameLbl.setText(newLabelText);
+					
+					//THIS IS WHERE I PROBABLY NEED TO NOTIFY AN OBSERVER THAT MY NETWORK CONFIG FILE HAS CHANGED...
+					this.notifyObservers();
+					
 				}
 			} catch(Exception ex) {
 				JOptionPane.showMessageDialog(null, "File could not be loaded, try again.");
@@ -111,5 +121,25 @@ public class FileUtility extends JPanel implements ActionListener {
 
 	public NetworkConfig getNetworkConfig() {
 		return(this.networkConfig);
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer ob : observers) {
+            System.out.println("Notifying Observers about network config file change");
+            ob.update(this.networkConfig);
+		}
+		
 	}
 }
