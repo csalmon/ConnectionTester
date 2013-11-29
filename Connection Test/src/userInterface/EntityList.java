@@ -54,7 +54,8 @@ public class EntityList extends JPanel implements Observer{
 	private void populateEntityList() {
 		int column = 2;
 		int row = 4;
-		for (Node currentNode : this.configFile.nodes) {
+		for (int index = 0; index < this.configFile.size(); index++) {
+			Node currentNode = this.configFile.get(index);
             System.out.println("Populating entity list with this node: " + currentNode.getName());
             JLabel nodeLabel = new JLabel(currentNode.getName());
             String labelLocation = Integer.toString(column) + ", " + Integer.toString(row);
