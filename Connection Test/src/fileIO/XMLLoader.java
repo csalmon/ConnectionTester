@@ -105,7 +105,7 @@ public class XMLLoader extends DefaultHandler {
             this.currListener.setTransportProtocol(this.channelTransport);
             this.currListener.setApplicationProtocol(this.channelApplication);
             this.currNode.addListener(this.currListener);
-            clearElementVariables(this.currInitiator);
+            clearElementVariables(this.currListener);
             System.out.println("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
@@ -133,9 +133,9 @@ public class XMLLoader extends DefaultHandler {
                 } else if (pProperty.equals("required-software")) {
                     this.currNode.setRequiredSoftware(pValue);
                 } else if (pProperty.equals("external-ip")) {
-                    this.currNode.addExternalIPs(InetAddress.getByName(pValue));
+                    this.currNode.addExternalIP(InetAddress.getByName(pValue));
                 } else if (pProperty.equals("internal-ip")) {
-                    this.currNode.addInternalIPs(InetAddress.getByName(pValue));
+                    this.currNode.addInternalIP(InetAddress.getByName(pValue));
                 } else if (pProperty.equals("security-zone")) {
                     this.currNode.setSecurityZone(pValue);
                 } else if (pProperty.equals("status")) {
@@ -162,9 +162,11 @@ public class XMLLoader extends DefaultHandler {
                     this.currNode.setContactInfo(info);
                 } else if (pProperty.equals("LUUID")) {
                     this.currListener.setCID(UUID.fromString(pValue));
-                } else if (pProperty.equals("ip-address")) {
+                } else if (pProperty.equals("lip-address") ||
+                		   pProperty.equals("iip-address")) {
                     this.channelAddr = InetAddress.getByName(pValue);
-                } else if (pProperty.equals("port")) {
+                } else if (pProperty.equals("lport") ||
+                		   pProperty.equals("iport")) {
                     this.channelPort = Integer.parseInt(pValue);
                 } else if (pProperty.equals("IUUID")) {
                     this.currInitiator.setCID(UUID.fromString(pValue));

@@ -87,7 +87,7 @@ public class Node {
 		return(externalIPs);
 	}
 
-	public void addExternalIPs(InetAddress pExternalIPs) {
+	public void addExternalIP(InetAddress pExternalIPs) {
 		this.externalIPs.add(pExternalIPs);
 	}
 
@@ -95,7 +95,7 @@ public class Node {
 		return(internalIPs);
 	}
 
-	public void addInternalIPs(InetAddress pInternalIPs) {
+	public void addInternalIP(InetAddress pInternalIPs) {
 		this.internalIPs.add(pInternalIPs);
 	}
 
