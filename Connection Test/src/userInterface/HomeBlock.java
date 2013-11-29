@@ -46,6 +46,7 @@ public class HomeBlock extends JFrame {
 		
 		filePanel.registerObserver(nodeList);
 		filePanel.registerObserver(NEPanel);
+		filePanel.registerObserver(activity);
 		
 		NEPanel.registerObserver(nodeList);
 	
