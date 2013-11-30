@@ -9,7 +9,7 @@
       <external-ip>129.123.189.2</external-ip>
       <internal-ip>192.168.13.6</internal-ip>
       <security-zone>Alpha</security-zone>
-      <status></status>
+      <status>ACTIVE</status>
       <contact-info>
          <organization>NSA</organization>
          <contact-person>Bob Smith</contact-person>
@@ -45,7 +45,7 @@
       <external-ip>129.123.7.7</external-ip>
       <internal-ip>192.168.78.3</internal-ip>
       <security-zone>Whiskey</security-zone>
-      <status></status>
+      <status>ACTIVE</status>
       <contact-info>
          <organization>CIA</organization>
          <contact-person>Jack Bean</contact-person>
@@ -75,7 +75,7 @@
       <internal-ip>192.168.13.14</internal-ip>
       <internal-ip>192.168.13.15</internal-ip>
       <security-zone>Whiskey</security-zone>
-      <status></status>
+      <status>ACTIVE</status>
       <contact-info>
          <organization>Home</organization>
          <contact-person>Bob Smith</contact-person>

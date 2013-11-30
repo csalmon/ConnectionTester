@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import observation.Observer;
+import simulator.Node;
 import simulator.Simulation;
 
 public class Tester extends JPanel implements ActionListener, Observer {
@@ -94,5 +95,11 @@ public class Tester extends JPanel implements ActionListener, Observer {
 	@Override
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
+	}
+
+	@Override
+	public void update(Node node, int flag) {
+		// TODO Auto-generated method stub
+		
 	}
 }
