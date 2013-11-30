@@ -11,12 +11,15 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
 
+import fileIO.NetworkConfig;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import observation.Observer;
 import simulator.Simulation;
 
-public class Tester extends JPanel implements ActionListener {
+public class Tester extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;
 
 	Simulation simulation = null;
@@ -24,6 +27,7 @@ public class Tester extends JPanel implements ActionListener {
 	JButton stopSimBtn = null;
 	boolean simulationStarted = false;
 	Thread simulationThread = null;
+	NetworkConfig configFile;
 	
 	public Tester() {
 		setSize(300, 100);
@@ -52,6 +56,7 @@ public class Tester extends JPanel implements ActionListener {
 		stopSimBtn = new JButton("Stop Simulation");
 		stopSimBtn.addActionListener(this);
 		add(stopSimBtn, "4, 4, left, top");
+		this.configFile = null;
 	}
 
 	@Override
@@ -61,7 +66,7 @@ public class Tester extends JPanel implements ActionListener {
 			
 			
 			if(simulationThread == null || simulationThread.getState() == Thread.State.NEW) {
-				simulation = new Simulation();
+				simulation = new Simulation(this.configFile.getActiveNode());
 				simulationThread = new Thread(simulation);
 				simulationThread.start();
 			
@@ -85,5 +90,9 @@ public class Tester extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
+	@Override
+	public void update(NetworkConfig netConfigFile) {
+		this.configFile = netConfigFile;
+	}
 }

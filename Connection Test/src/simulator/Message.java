@@ -9,12 +9,10 @@ public class Message implements Serializable {
 
 	private static final long serialVersionUID = 7185166580395590727L;
 	private String fileVersion;
-	//private UUID nodeID;
 	private ArrayList<UUID> nodeIDs;
 	
 	public Message() {
 		this.fileVersion = "";
-//		this.nodeID = null;
 		this.nodeIDs = new ArrayList<UUID>();
 	}
 	
@@ -36,6 +34,8 @@ public class Message implements Serializable {
 	}
 	
 	public void addNodeID(UUID pNewNode) {
-		this.nodeIDs.add(pNewNode);
+		if (!this.nodeIDs.contains(pNewNode)) {
+			this.nodeIDs.add(pNewNode);
+		}
 	}
 }

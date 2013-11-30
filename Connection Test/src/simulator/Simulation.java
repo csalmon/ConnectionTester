@@ -1,87 +1,74 @@
 package simulator;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-
 import org.apache.log4j.Logger;
-
 
 public class Simulation implements Runnable {
 	Node lActiveNode = null;
-	Listener lTestListener = null;
-	Initiator lTestInitiator = null;
 	Logger _lLogger = null;
 	
-	public Simulation() {
-		
+	public Simulation(Node pActiveNode) {
+		this.lActiveNode = pActiveNode;
 	}
 	
 	public void testSimulator() {
-		System.out.println("Simulation started");
 		try {
-			// Items marked with *** will really be used as constructor actions
-			// or as a call to the SimulatorPanel class when the NetworkConfiguration
-			// is loaded.  Here, these actions are just used to setup a driver program.
-			_lLogger = Logger.getLogger(Simulation.class);
-			int lNumNodes = 5;
-			// Size of file version + size of UUID + some extra
-			int lMessageSize = 20 + 16 + 64;
-
-			// *** Create an array of nodes representing the NetworkConfiguration
-			lActiveNode = new Node("1.0.0.0");
-			_lLogger.debug("Node created");
-			
-			// ** Define the source and destinations of the channel
-			int lPort = 16128;
-			InetSocketAddress lInitiatorAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), lPort);
-			InetSocketAddress lListenerAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), lPort);
-			_lLogger.debug("Channel Endpoints Created");
-			
-			// *** Create listener channels and associate with each node
-			// (as defined by the NetworkConfiguration)
-			lTestListener = new Listener(lInitiatorAddr, lListenerAddr, lActiveNode.getMessageQueue(), lNumNodes * lMessageSize);
-			lActiveNode.addListener(lTestListener);
-			_lLogger.debug("Listeners Created");
-			
-			// *** Create initiator channels and associate with each node
-			// (as defined by the NetworkConfiguration)
-			lTestInitiator = new Initiator(lInitiatorAddr, lListenerAddr);			
-			lActiveNode.addInitiator(lTestInitiator);
-			_lLogger.debug("Initiators Created");
-			
-
-			// Activate Node Listeners
-			lActiveNode.startListeners();
-			_lLogger.debug("Listeners activated");
-			
-			// Process the active node while the simulation is running
-			// while (true = simulation running) {
-			Message lMessage = new Message();
-			while (lMessage.getNodeIDs().size() < lNumNodes && !Thread.currentThread().isInterrupted() ) {
-				// Process messages for the active (local) node identified from the NetworkConfiguration
-				lMessage = lActiveNode.processMessage();
+			if (null == this.lActiveNode) {
+				this._lLogger.debug("No active node defined.  Unable to run simulation.");
+				System.out.println("No active node defined.  Unable to run simulation.");
+				return;
 			}
 			
-			// Wait for listener to finish its debuggin I/O
-			Thread.sleep(3000);
-			lActiveNode.stopListeners();
-			lActiveNode = null;
-			_lLogger.debug("Simulation ended");
-			System.out.println("Simulation ended");
-		
+			this._lLogger = Logger.getLogger(Simulation.class);
+			
+			// Activate Node Listeners
+			this.lActiveNode.startListeners();
+			this._lLogger.debug("Listeners activated");
+			System.out.println("Listeners activated");
+			
+			// Process the active node while the simulation is running
+			this._lLogger.debug("Beginning Simulation");
+			System.out.println("Beginning Simulation");
+			Message lMessage = new Message();
+			while (!Thread.currentThread().isInterrupted() ) {
+				// Process messages for the active (local) node identified from the NetworkConfiguration
+				lMessage = lActiveNode.processMessage();
+				//TODO: pass lMessage back to the UI
+				Thread.sleep(1000);
+			}
 		} catch (Exception ex) {
-			//ex.printStackTrace();
-			lActiveNode.stopListeners();
-			lActiveNode = null;
-			_lLogger = null;
-			System.out.println("Simulation interrupted");
+			try {
+				// Wait for listener to finish its debugging I/O
+				Thread.sleep(1000);
+				this.lActiveNode.stopListeners();
+				lActiveNode = null;
+				_lLogger.debug("Simulation stopped");
+				System.out.println("Simulation stopped");
+				_lLogger = null;
+			} catch (Exception iex) {
+				ex.printStackTrace();
+			}
+			
+		} finally {
+			try {
+				// Wait for listener to finish its debugging I/O
+				Thread.sleep(1000);
+				if (null != this.lActiveNode) {
+					this.lActiveNode.stopListeners();
+					lActiveNode = null;
+				}
+				
+				if (null != _lLogger) {
+					_lLogger.debug("Simulation ended");
+					System.out.println("Simulation ended");
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void run() {
-		this.testSimulator();
-		
+		this.testSimulator();	
     }
-		
 }

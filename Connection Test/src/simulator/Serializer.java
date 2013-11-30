@@ -31,7 +31,7 @@ public class Serializer {
 			}
 			ByteArrayInputStream lByteStream = new ByteArrayInputStream(pByteArray);
 			ObjectInputStream lObjInput = new ObjectInputStream(lByteStream);
-			Message lMsg = (Message)lObjInput.readObject();			
+			Message lMsg = (Message)lObjInput.readObject();
 			lObjInput.close();
 			lByteStream.close();
 			return(lMsg);

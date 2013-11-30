@@ -27,6 +27,7 @@ public class XMLLoader extends DefaultHandler {
     private Listener currListener;
     private Initiator currInitiator;
     private InetAddress channelAddr;
+    private InetAddress remoteAddr;
     private int channelPort;
     private String channelTransport;
     private String channelApplication;
@@ -46,6 +47,7 @@ public class XMLLoader extends DefaultHandler {
         this.currListener = null;
         this.currInitiator = null;
         this.channelAddr = null;
+        this.remoteAddr = null;
         this.channelPort = 0;
         this.fileVersion = new String();
         this.channelTransport = new String();
@@ -66,7 +68,7 @@ public class XMLLoader extends DefaultHandler {
             this.currNode = new Node(this.fileVersion);
             System.out.println("Creating a new node.");
         } else if (this.LISTENER.equals(pQName)) {
-            this.currListener = new Listener(null, null, null, 0);
+            this.currListener = new Listener(null, null, null);
             System.out.println("Creating a new listener.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator = new Initiator(null, null);
@@ -109,6 +111,7 @@ public class XMLLoader extends DefaultHandler {
             System.out.println("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
+            this.currInitiator.setListener(this.remoteAddr, this.channelPort);
             this.currInitiator.setTransportProtocol(this.channelTransport);
             this.currInitiator.setApplicationProtocol(this.channelApplication);
             this.currNode.addInitiator(this.currInitiator);
@@ -170,6 +173,8 @@ public class XMLLoader extends DefaultHandler {
                     this.channelPort = Integer.parseInt(pValue);
                 } else if (pProperty.equals("IUUID")) {
                     this.currInitiator.setCID(UUID.fromString(pValue));
+                } else if (pProperty.equals("remote-ip")) {
+                	this.remoteAddr = InetAddress.getByName(pValue);
                 } else if (pProperty.equals("transport-protocol")) {
                 	this.channelTransport = pValue;
                 } else if (pProperty.equals("application-protocol")) {
@@ -199,6 +204,7 @@ public class XMLLoader extends DefaultHandler {
         this.tagValueList.add("lport");
         this.tagValueList.add("IUUID");
         this.tagValueList.add("iip-address");
+        this.tagValueList.add("remote-ip");
         this.tagValueList.add("iport");
         this.tagValueList.add("transport-protocol");
         this.tagValueList.add("application-protocol");
@@ -213,6 +219,7 @@ public class XMLLoader extends DefaultHandler {
     private void clearElementVariables(Channel pChannel) {
     	pChannel = null;
         this.channelAddr = null;
+        this.remoteAddr = null;
         this.channelPort = 0;
         this.channelTransport = new String();
         this.channelApplication = new String();

@@ -20,9 +20,11 @@ public class Initiator extends Channel {
 	public void openConnection() {
 		try {
 			this.channel = DatagramChannel.open();
+			this.channel.socket().bind(this.initiator);
 			this.channel.configureBlocking(false);       
-			this.channel.connect(listener);
+			this.channel.connect(this.listener);
 			this._logger.debug("Initiator connection is open.");
+			System.out.println("Initiator connection is open.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -35,11 +37,14 @@ public class Initiator extends Channel {
 				if (this.channel.isConnected()) {	     
 					this.buffer = ByteBuffer.wrap(Serializer.serialize(pMessage));
 					this.channel.send(buffer,listener);
-					this._logger.debug("Initiator has sent the message.");
-					this._logger.debug("Message's file version: " + pMessage.getFileVersion());
+					this._logger.debug("Initiator has sent a message.");
+					System.out.println("Initiator has sent a message.");
+					this._logger.debug("Sent message's file version: " + pMessage.getFileVersion());
+					System.out.println("Sent message's file version: " + pMessage.getFileVersion());
 					ArrayList<UUID> lNodeIDs = pMessage.getNodeIDs();
     				for (int index = 0; index < lNodeIDs.size(); index++) {
-    					this._logger.debug("Node UUID " + Integer.toString(index) + ": "+ lNodeIDs.get(index));
+    					this._logger.debug("Sent Node UUID " + Integer.toString(index) + ": " + lNodeIDs.get(index));
+    					System.out.println("Sent Node UUID " + Integer.toString(index) + ": " + lNodeIDs.get(index));
     				}
 	        	 }
 	        }
@@ -53,6 +58,7 @@ public class Initiator extends Channel {
 			if (this.channel.isConnected()) { 
 	      		this.channel.close();
 	      		this._logger.debug("Initiator connection is closed.");
+	      		System.out.println("Initiator connection is closed.");
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -45,7 +45,7 @@ public class HomeBlock extends JFrame {
 		console = new Console();
 		
 		filePanel.registerObserver(nodeList);
-		
+		filePanel.registerObserver(TPanel);
 	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));

@@ -128,6 +128,7 @@ public class Node {
 	}
 
 	public void addListener(Listener pListener) {
+		pListener.setMessageQueue(this.messages);
 		this.listeners.add(pListener);
 	}
 
