@@ -88,7 +88,7 @@ public class FileUtility extends JPanel implements ActionListener, Observable {
 					String newLabelText = xmlFile.getName();
 					fileNameLbl.setText(newLabelText);
 					
-					//THIS IS WHERE I PROBABLY NEED TO NOTIFY AN OBSERVER THAT MY NETWORK CONFIG FILE HAS CHANGED...
+					//NOTIFY ANY OBSERVER THAT MY NETWORK CONFIG FILE HAS CHANGED.
 					this.notifyObservers();
 					
 				}

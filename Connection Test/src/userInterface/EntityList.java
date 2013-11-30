@@ -20,9 +20,10 @@ import javax.swing.JLabel;
 import observation.Observer;
 import simulator.Node;
 
-public class EntityList extends JPanel implements Observer{
+public class EntityList extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	ArrayList <JLabel> nodeLabels = new ArrayList<JLabel>();
+	ArrayList <String> nodeLocations = new ArrayList<String>();
 	NetworkConfig configFile = null;
 
 	public EntityList() {
@@ -51,27 +52,46 @@ public class EntityList extends JPanel implements Observer{
 		add(lblListOfNodes, "2, 2");
 	}
 
-	private void populateEntityList() {
+	private void populateLabelList() {
+	
+		//set all nodes to invisbile
+		for (int index = 0; index < nodeLabels.size(); index++) {
+			nodeLabels.get(index).setVisible(false);
+		}
+		
+		this.repaint();
+		
 		int column = 2;
 		int row = 4;
+		//show current/alive nodes
 		for (int index = 0; index < this.configFile.size(); index++) {
 			Node currentNode = this.configFile.get(index);
             System.out.println("Populating entity list with this node: " + currentNode.getName());
-            JLabel nodeLabel = new JLabel(currentNode.getName());
-            String labelLocation = Integer.toString(column) + ", " + Integer.toString(row);
+            JLabel nodeLabel = new JLabel("INDEX " + index + ". " + currentNode.getName());
+            String nodeLocation = Integer.toString(column) + ", " + Integer.toString(row);
 
             row+=2;
             nodeLabels.add(nodeLabel);
-            this.add(nodeLabel, labelLocation);
+            nodeLocations.add(nodeLocation);
+            this.add(nodeLabel, nodeLocation);
+
 		}
 
 	}
+
 	
 	@Override
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
-		this.populateEntityList();
+		System.out.println("EntityList successfully loaded the network config file");		
+		this.populateLabelList();
 		
+		
+	}
+
+	@Override
+	public void update(Node node, int flag) {
+		//updating individual nodes does not happen in the Entity List. This method intentionally left blank.
 	}
 
 }
