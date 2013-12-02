@@ -15,6 +15,8 @@ import fileIO.NetworkConfig;
 
 import javax.swing.JLabel;
 
+import org.apache.log4j.Logger;
+
 import observation.Observer;
 import simulator.Node;
 
@@ -28,7 +30,7 @@ public class Viewer extends JPanel implements Observer{
 	ArrayList <JLabel> nodeNameLabels = new ArrayList<JLabel>();
 	ArrayList <JLabel> nodeStatusLabels = new ArrayList<JLabel>();
 	NetworkConfig configFile = null;
-	
+	private Logger rtLogger = Logger.getRootLogger();
 	
 	public Viewer() {
 		setSize(495, 250);
@@ -83,7 +85,7 @@ public class Viewer extends JPanel implements Observer{
 			String nodeNameLoc = col + ", " + row;
 			String nodeStatusLoc = col + ", " + (row+1);
 			
-			System.out.println(currentNode.getName() + " name Location: " + nodeNameLoc + " status Location: " + nodeStatusLoc);
+			rtLogger.info(currentNode.getName() + " Name Location: " + nodeNameLoc + " Status Location: " + nodeStatusLoc);
 			add( nodeNameLabel, nodeNameLoc );
 			add( nodeStatusLabel, nodeStatusLoc );
 			
@@ -100,7 +102,7 @@ public class Viewer extends JPanel implements Observer{
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
 		this.numNodesInSimulation = this.configFile.size();
-		System.out.println("Viewer successfully loaded the network config file");
+		rtLogger.debug("Viewer successfully loaded the network config file");
 		this.populateLabelList();
 		
 	}

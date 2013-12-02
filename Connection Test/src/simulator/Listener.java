@@ -49,7 +49,7 @@ public class Listener extends Channel implements Runnable {
             } else {
                 why = e.getMessage();
             }
-            System.out.println("Exception thrown in run(): " + why);
+            _logger.error("Exception thrown in run(): " + why);
             
         }
 	}
@@ -63,7 +63,6 @@ public class Listener extends Channel implements Runnable {
 		    this.channel.configureBlocking(false);   
 		    this.channel.register(this.channelMgr, this.channel.validOps());
 		    this._logger.debug("Listening channel is open.");
-		    System.out.println("Listening channel is open.");
 		} catch (Exception e) {
 			String why = null;
             Throwable cause = e.getCause();
@@ -72,7 +71,7 @@ public class Listener extends Channel implements Runnable {
             } else {
                 why = e.getMessage();
             }
-            System.out.println("Exception thrown in openConnection(): " + why + "\n Here's the stacktrace: \n");
+            _logger.error("Exception thrown in openConnection(): " + why + "\n Here's the stacktrace: \n");
             e.printStackTrace();
             
         }
@@ -81,8 +80,7 @@ public class Listener extends Channel implements Runnable {
 	
 	private void listen() {
 		try {
-			this._logger.debug("Listener is commencing.");
-			System.out.println("Listener is commencing.");
+			this._logger.info("Listener is commencing.");
 			while (!Thread.currentThread().isInterrupted()) {                          
 	            this.channelMgr.select();
 	            for (Iterator<SelectionKey> keyIndex = channelMgr.selectedKeys().iterator(); keyIndex.hasNext();) { 
@@ -96,20 +94,16 @@ public class Listener extends Channel implements Runnable {
 	    				//TCP version contains a loop to read all the data, but overall it would not affect the design
 	    				//The construct to read data in a loop is converted to a single line
 	    				this.destAddress = (InetSocketAddress)this.client.receive(buffer);
-	    				this._logger.debug("Incoming message from: " + destAddress);
-	    				System.out.println("Incoming message from: " + destAddress);
+	    				this._logger.info("Incoming message from: " + destAddress.getHostName());
 	        			this.buffer.flip();
 	        			//New Input Message
 	        			if (this.buffer.hasRemaining()) {
-	        				this._logger.debug("Received message");
-	        				System.out.println("Received message");
+	        				this._logger.info("Received message");
 	        				Message lMessage = convertBufferToMessage(this.buffer);
-	        				this._logger.debug("Received message's file version: " + lMessage.getFileVersion());
-	        				System.out.println("Received message's file version: " + lMessage.getFileVersion());
+	        				this._logger.info("Received message's file version: " + lMessage.getFileVersion());
 	        				ArrayList<UUID> lNodeIDs = lMessage.getNodeIDs();
 	        				for (int index = 0; index < lNodeIDs.size(); index++) {
-	        					this._logger.debug("Received Node UUID " + Integer.toString(index) + ": "+ lNodeIDs.get(index));
-	        					System.out.println("Received Node UUID " + Integer.toString(index) + ": "+ lNodeIDs.get(index));
+	        					this._logger.info("Received Node UUID " + Integer.toString(index) + ": "+ lNodeIDs.get(index).toString().substring(30));
 	        				}
 	        				//Add message to message queue
 	        				this.messages.enqueue(lMessage);
@@ -139,9 +133,7 @@ public class Listener extends Channel implements Runnable {
 			this.channel.socket().close();
           	this.channel.close();
           	this._logger.debug("Listening channel is closed.");
-          	System.out.println("Listening channel is closed.");
-			this._logger.debug("Listener has completed listening.");
-			System.out.println("Listener has completed listening");
+			this._logger.info("Listener has completed listening.");
 		} catch (Exception ex) {
 			
 		}

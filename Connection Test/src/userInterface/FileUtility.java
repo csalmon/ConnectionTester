@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import org.apache.log4j.Logger;
+
 import observation.Observable;
 import observation.Observer;
 
@@ -31,6 +33,7 @@ public class FileUtility extends JPanel implements ActionListener, Observable {
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	private NetworkConfig networkConfig = null;
+	private Logger rtLogger = Logger.getRootLogger();
 	
 	JButton loadBtn = null;
 	JButton saveBtn = null;
@@ -76,15 +79,15 @@ public class FileUtility extends JPanel implements ActionListener, Observable {
 	public void actionPerformed(ActionEvent action) {
 		
 		if(action.getSource() == loadBtn) {
-			System.out.println("load button pressed");
+			rtLogger.info("Load button pressed");
 			try {
 				if (browser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					xmlFile = browser.getSelectedFile();
 					this.networkConfig = new NetworkConfig(xmlFile.getAbsolutePath());
 					JOptionPane.showMessageDialog(null, "Loaded " + networkConfig.size() + " nodes from the xml file.");
 					
-					System.out.println("file chosen and loaded: " + xmlFile.getName());
-					System.out.println("file full path: " + xmlFile.toString());
+					rtLogger.info("File chosen and loaded: " + xmlFile.getName());
+					rtLogger.debug("File full path: " + xmlFile.toString());
 					String newLabelText = xmlFile.getName();
 					fileNameLbl.setText(newLabelText);
 					
@@ -105,11 +108,11 @@ public class FileUtility extends JPanel implements ActionListener, Observable {
 					XMLWriter xmlWriter = new XMLWriter();
 					String saveStr = xmlWriter.writeXML(this.networkConfig);
 					writer.append(saveStr);
-					System.out.println("Network Configuration saved as XML file " + browser.getSelectedFile().getAbsolutePath());
+					rtLogger.info("Network Configuration saved as XML file " + browser.getSelectedFile().getAbsolutePath());
 	                writer.flush();
 	                writer.close();
 				}else if(browser.showSaveDialog(null) == JFileChooser.CANCEL_OPTION) {
-	                System.out.println("Operation Cancelled");
+					rtLogger.warn("Operation Cancelled");
 	            }
 			} catch (Exception ex) {
 	            JOptionPane.showMessageDialog(null, "File could not be written, try again.");
@@ -137,7 +140,7 @@ public class FileUtility extends JPanel implements ActionListener, Observable {
 	@Override
 	public void notifyObservers() {
 		for (Observer ob : observers) {
-            System.out.println("Notifying Observers about network config file change");
+			rtLogger.info("Notifying Observers about network config file change");
             ob.update(this.networkConfig);
 		}
 		

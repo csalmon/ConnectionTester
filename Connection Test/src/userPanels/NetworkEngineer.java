@@ -19,6 +19,8 @@ import fileIO.NetworkConfig;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import org.apache.log4j.Logger;
+
 import observation.Observable;
 import observation.Observer;
 import simulator.Node;
@@ -27,13 +29,13 @@ import simulator.Simulation;
 public class NetworkEngineer extends JPanel implements ActionListener, Observer, Observable {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private Logger rtLogger = Logger.getRootLogger();
 	
 	JButton createNodeBtn = null;
 	JButton deleteNodeBtn = null;
 	JButton editNodeBtn = null;
 	JButton newFileBtn = null;
 	NetworkConfig configFile = null;
-	
 	
 	public NetworkEngineer() {
 		setSize(470, 100);
@@ -73,7 +75,6 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 		add(createNodeBtn, "4, 4, left, top");
 		add(deleteNodeBtn, "6, 4, left, top");
 		add(editNodeBtn, "8, 4, left, top");
-
 		
 	}
 
@@ -81,19 +82,19 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == createNodeBtn ) {			
-			System.out.println("pressed create Node button");
+			rtLogger.debug("Pressed create Node button");
 			this.createNode();
 		
 		} else if(e.getSource() == deleteNodeBtn) {
-			System.out.println("pressed delete Node button");
+			rtLogger.debug("Pressed delete Node button");
 			this.deleteNode();
 			
 		} else if(e.getSource() == editNodeBtn) {			
-			System.out.println("pressed edit Node button");
+			rtLogger.debug("Pressed edit Node button");
 			this.editNode();
 			
 		} else if(e.getSource() == newFileBtn) {
-			System.out.println("pressed new File button");
+			rtLogger.debug("Pressed new File button");
 			this.createNetworkConfigFile();
 		}
 	}
@@ -156,7 +157,7 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 	@Override
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
-		System.out.println("Network engineer successfully loaded the network config file");
+		rtLogger.info("Network engineer successfully loaded the network config file");
 		
 	}
 

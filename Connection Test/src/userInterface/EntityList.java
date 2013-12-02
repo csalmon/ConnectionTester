@@ -17,6 +17,8 @@ import fileIO.NetworkConfig;
 
 import javax.swing.JLabel;
 
+import org.apache.log4j.Logger;
+
 import observation.Observer;
 import simulator.Node;
 
@@ -25,6 +27,7 @@ public class EntityList extends JPanel implements Observer {
 	ArrayList <JLabel> nodeLabels = new ArrayList<JLabel>();
 	ArrayList <String> nodeLocations = new ArrayList<String>();
 	NetworkConfig configFile = null;
+	private Logger rtLogger = Logger.getRootLogger();
 
 	public EntityList() {
 		setSize(259, 415);
@@ -66,7 +69,7 @@ public class EntityList extends JPanel implements Observer {
 		//show current/alive nodes
 		for (int index = 0; index < this.configFile.size(); index++) {
 			Node currentNode = this.configFile.get(index);
-            System.out.println("Populating entity list with this node: " + currentNode.getName());
+			rtLogger.info("Populating entity list with this node: " + currentNode.getName());
             JLabel nodeLabel = new JLabel("INDEX " + index + ". " + currentNode.getName());
             String nodeLocation = Integer.toString(column) + ", " + Integer.toString(row);
 
@@ -74,7 +77,6 @@ public class EntityList extends JPanel implements Observer {
             nodeLabels.add(nodeLabel);
             nodeLocations.add(nodeLocation);
             this.add(nodeLabel, nodeLocation);
-
 		}
 
 	}
@@ -83,10 +85,8 @@ public class EntityList extends JPanel implements Observer {
 	@Override
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
-		System.out.println("EntityList successfully loaded the network config file");		
+		rtLogger.info("EntityList successfully loaded the network config file");		
 		this.populateLabelList();
-		
-		
 	}
 
 	@Override

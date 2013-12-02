@@ -4,6 +4,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
+import org.apache.log4j.Logger;
+
 import userPanels.Manager;
 import userPanels.NetworkEngineer;
 import userPanels.SecurityOfficer;
@@ -13,6 +15,7 @@ import java.awt.Color;
 
 public class HomeBlock extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private Logger rtLogger = Logger.getRootLogger();
 	
 	//USER PANELS
 	Tester TPanel = null;
@@ -48,6 +51,7 @@ public class HomeBlock extends JFrame {
 		filePanel.registerObserver(TPanel);
 		filePanel.registerObserver(NEPanel);
 		filePanel.registerObserver(activity);		
+		filePanel.registerObserver(console);	
 		NEPanel.registerObserver(nodeList);
 
 	
@@ -74,7 +78,7 @@ public class HomeBlock extends JFrame {
 				break;
 			}
 			default: {
-				System.out.println("This really shouldn't be possible..");
+				rtLogger.warn("This really shouldn't be possible..");
 			}
 		}
 		

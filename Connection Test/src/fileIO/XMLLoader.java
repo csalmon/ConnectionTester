@@ -1,5 +1,6 @@
 package fileIO;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -37,6 +38,7 @@ public class XMLLoader extends DefaultHandler {
     private final String INITIATOR = new String("initiator");
     private final String NETWORKCONFIG = new String("networkconfig");
     private final String VERSION = new String("version");
+    private Logger rtLogger = Logger.getRootLogger();
 
     public XMLLoader() {
         this.openTags = new Stack<String>();
@@ -66,13 +68,13 @@ public class XMLLoader extends DefaultHandler {
             this.fileVersion = pAttributes.getValue(this.VERSION);
         } else if (this.NODE.equals(pQName)) {
             this.currNode = new Node(this.fileVersion);
-            System.out.println("Creating a new node.");
+            rtLogger.info("Creating a new node.");
         } else if (this.LISTENER.equals(pQName)) {
             this.currListener = new Listener(null, null, null);
-            System.out.println("Creating a new listener.");
+            rtLogger.info("Creating a new listener.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator = new Initiator(null, null);
-            System.out.println("Creating a new initiator.");
+            rtLogger.info("Creating a new initiator.");
         }
     }
 
@@ -100,15 +102,16 @@ public class XMLLoader extends DefaultHandler {
         this.openTags.pop();
         if (this.NODE.equals(pQName)) {
             this.nodes.add(this.currNode);
+            //this.currNode = null;
+            rtLogger.info("New node ["  + currNode.getNID().toString().substring(30) + "] added to network configuration");
             this.currNode = null;
-            System.out.println("New node added to network configuration.");
         } else if (this.LISTENER.equals(pQName)) {
             this.currListener.setListener(this.channelAddr, this.channelPort);
             this.currListener.setTransportProtocol(this.channelTransport);
             this.currListener.setApplicationProtocol(this.channelApplication);
             this.currNode.addListener(this.currListener);
             clearElementVariables(this.currListener);
-            System.out.println("New listener added to the node.");
+            rtLogger.info("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
             this.currInitiator.setListener(this.remoteAddr, this.channelPort);
@@ -116,7 +119,7 @@ public class XMLLoader extends DefaultHandler {
             this.currInitiator.setApplicationProtocol(this.channelApplication);
             this.currNode.addInitiator(this.currInitiator);
             clearElementVariables(this.currInitiator);
-            System.out.println("New initiator added to the node.");
+            rtLogger.info("New initiator added to the node.");
         }
     }
 
