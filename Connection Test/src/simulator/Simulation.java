@@ -1,30 +1,44 @@
 package simulator;
 
+import java.util.ArrayList;
+
+import observation.Observable;
+import observation.Observer;
+
 import org.apache.log4j.Logger;
 
-public class Simulation implements Runnable {
+public class Simulation implements Runnable, Observable {
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	Node lActiveNode = null;
 	Logger _lLogger = null;
+	final int UNUSED_FLAG = 0;
 	
-	public Simulation(Node pActiveNode) {
+	public void setActiveNode(Node pActiveNode) {
 		this.lActiveNode = pActiveNode;
 	}
 	
-	public void testSimulator() {
-		this._lLogger = Logger.getLogger(Simulation.class);
+	public Simulation() {
 		
+	}
+	
+	public void testSimulator() {
 		try {
 			if (null == this.lActiveNode) {
-				this._lLogger.error("No active node defined.  Unable to run simulation.");
+				this._lLogger.debug("No active node defined.  Unable to run simulation.");
+				System.out.println("No active node defined.  Unable to run simulation.");
 				return;
 			}
 			
+			this._lLogger = Logger.getLogger(Simulation.class);
+			
 			// Activate Node Listeners
 			this.lActiveNode.startListeners();
-			this._lLogger.info("Listeners activated");
+			this._lLogger.debug("Listeners activated");
+			System.out.println("Listeners activated");
 			
 			// Process the active node while the simulation is running
-			this._lLogger.info("Beginning Simulation");
+			this._lLogger.debug("Beginning Simulation");
+			System.out.println("Beginning Simulation");
 			Message lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration
@@ -38,7 +52,8 @@ public class Simulation implements Runnable {
 				Thread.sleep(1000);
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
-				_lLogger.info("Simulation stopped");
+				_lLogger.debug("Simulation stopped");
+				System.out.println("Simulation stopped");
 				_lLogger = null;
 			} catch (Exception iex) {
 				ex.printStackTrace();
@@ -54,7 +69,8 @@ public class Simulation implements Runnable {
 				}
 				
 				if (null != _lLogger) {
-					_lLogger.info("Simulation ended");
+					_lLogger.debug("Simulation ended");
+					System.out.println("Simulation ended");
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -66,4 +82,25 @@ public class Simulation implements Runnable {
 	public void run() {
 		this.testSimulator();	
     }
+
+	@Override
+	public void registerObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (Observer ob : observers) {
+            System.out.println("Notifying Observers about a node change.");
+            
+            ob.update(this.lActiveNode,UNUSED_FLAG);
+		}
+		
+	}
 }

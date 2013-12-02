@@ -26,7 +26,7 @@ import observation.Observer;
 import simulator.Node;
 import simulator.UIConsoleAppender;
 
-public class Console extends JPanel implements Observer{
+public class Console extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	public ArrayList<String> textLines;
 	public JList textList;
@@ -38,26 +38,6 @@ public class Console extends JPanel implements Observer{
 		setBounds(279, 380, 495, 155);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-		/*setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(318dlu;default)"),},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));*/
 		
 		JLabel lblConsole = new JLabel("Console");
 		add(lblConsole, "2, 2");
@@ -87,29 +67,6 @@ public class Console extends JPanel implements Observer{
 		
 		initAppender();
 
-		/*
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.add(scrollPane);
-		add(lblNewLabel, "2, 4");
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		add(lblNewLabel_1, "2, 6");
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		add(lblNewLabel_2, "2, 8");
-		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		add(lblNewLabel_3, "2, 10");
-		
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		add(lblNewLabel_4, "2, 12");
-		
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		add(lblNewLabel_5, "2, 14");
-		
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		add(lblNewLabel_6, "2, 16");
-		*/
 	}
 
 	public void initAppender()
@@ -130,7 +87,7 @@ public class Console extends JPanel implements Observer{
 	
 	public void update(NetworkConfig netConfigFile)
 	{
-		//System.out.println("\r\n!!!!!!!!! Console Update Was Called !!!!!!!!!!!\r\n");
+		System.out.println("\r\n!!!!!!!!! Console Update Was Called !!!!!!!!!!!\r\n");
 		// Intentionally left blank for now...
 	}
 

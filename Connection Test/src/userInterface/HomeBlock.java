@@ -4,8 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-import org.apache.log4j.Logger;
-
+import simulator.Simulation;
 import userPanels.Manager;
 import userPanels.NetworkEngineer;
 import userPanels.SecurityOfficer;
@@ -15,7 +14,6 @@ import java.awt.Color;
 
 public class HomeBlock extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private Logger rtLogger = Logger.getRootLogger();
 	
 	//USER PANELS
 	Tester TPanel = null;
@@ -37,11 +35,13 @@ public class HomeBlock extends JFrame {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		Simulation simulation = new Simulation();
+		
 		NEPanel = new NetworkEngineer();
-		TPanel = new Tester();
+		TPanel = new Tester(simulation);
 		SOPanel = new SecurityOfficer();
 		MPanel = new Manager();
-		
+				
 		filePanel = new FileUtility();
 		activity = new Viewer();
 		nodeList = new EntityList();
@@ -50,9 +50,12 @@ public class HomeBlock extends JFrame {
 		filePanel.registerObserver(nodeList);
 		filePanel.registerObserver(TPanel);
 		filePanel.registerObserver(NEPanel);
-		filePanel.registerObserver(activity);		
-		filePanel.registerObserver(console);	
+		filePanel.registerObserver(activity);
+		
+		//Viewer needs to know what the network engineer panel does so it can react accordingly (delete node/create node, etc)
 		NEPanel.registerObserver(nodeList);
+		
+		
 
 	
 		tabbedPane = new JTabbedPane();
@@ -78,7 +81,7 @@ public class HomeBlock extends JFrame {
 				break;
 			}
 			default: {
-				rtLogger.warn("This really shouldn't be possible..");
+				System.out.println("This really shouldn't be possible..");
 			}
 		}
 		

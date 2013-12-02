@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -30,7 +31,7 @@ public class Tester extends JPanel implements ActionListener, Observer {
 	Thread simulationThread = null;
 	NetworkConfig configFile;
 	
-	public Tester() {
+	public Tester(Simulation simulation) {
 		setSize(300, 100);
 		setVisible(true);
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -65,26 +66,33 @@ public class Tester extends JPanel implements ActionListener, Observer {
 		 
 		if(e.getSource() == runSimBtn ) {
 			
+			if(this.configFile == null) {
+				JOptionPane.showMessageDialog(null, "Please load a Network Config File. You haven't loaded one yet.");
+				return;
+			}
 			
 			if(simulationThread == null || simulationThread.getState() == Thread.State.NEW) {
-				simulation = new Simulation(this.configFile.getActiveNode());
+				simulation.setActiveNode(this.configFile.getActiveNode());
 				simulationThread = new Thread(simulation);
 				simulationThread.start();
 			
 			} else {
+				JOptionPane.showMessageDialog(null, "You pressed the start button but a simulation had already been ran." + 
+						"\nKilling previous simulation. Please run simulation again");
 				System.out.println("You pressed the start button but a simulation had already been ran." + 
-									"\nKilling previous simulation. Please run simulation again");
+						"\nKilling previous simulation. Please run simulation again");
 				simulationThread.interrupt();
 				simulationThread = null;
 				
 			}
 			
-
 		} else if(e.getSource() == stopSimBtn) {
 			
 			if(simulationThread == null) {
+				JOptionPane.showMessageDialog(null, "You pressed the stop button but there was no simulation running. No effect.");
 				System.out.println("You pressed the stop button but there was no simulation running. No effect.");
 			} else {
+				JOptionPane.showMessageDialog(null, "You pressed the stop button. Simulation was running or it had run recently. Interrupting simulation or cleaning up previously run simulation.");
 				System.out.println("You pressed the stop button. Simulation was running or it had run recently. Interrupting simulation or cleaning up previously run simulation.");
 				simulationThread.interrupt();
 				simulationThread = null;
