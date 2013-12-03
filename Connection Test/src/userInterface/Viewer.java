@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -15,11 +16,6 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 
 import fileIO.NetworkConfig;
-
-import javax.swing.JLabel;
-
-import org.apache.log4j.Logger;
-
 import observation.Observer;
 import simulator.Message;
 import simulator.Node;
@@ -102,7 +98,7 @@ public class Viewer extends JPanel implements Observer{
 		int col = 2;
 		int row = 4;
 		Node activeNode = this.configFile.getActiveNode();
-		for(int index = 0; index < nodeNameLabels.size(); index++) {
+		for(int index = 0; index < numNodesInSimulation; index++) {
 			Node currentNode = this.configFile.get(index);
 			System.out.println("Populating VIEWER with this node: " + currentNode.getName());
 			

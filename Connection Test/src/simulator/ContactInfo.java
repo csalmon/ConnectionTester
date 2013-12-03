@@ -35,4 +35,10 @@ public class ContactInfo {
 	public void setContactPhone(String contactPhone) {
 		this.contactPhone = contactPhone;
 	}
+	
+	public String toString() {
+		return "\nOrganization: " + this.organization + "\nContact Person: " + this.contactPerson + "\nContant Phone: " + this.contactPhone;
+		
+	}
+	
 }

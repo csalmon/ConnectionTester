@@ -46,6 +46,29 @@ public class NetworkConfig {
         }
     }
     
+    public NetworkConfig() {
+        try {
+            // obtain and configure a SAX based parser
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            saxParserFactory.setNamespaceAware(true);
+
+            // obtain object for SAX parser
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+
+            // obtain an XML reader
+            XMLReader xmlReader = saxParser.getXMLReader();
+            XMLLoader loadedNodes = new XMLLoader();
+            xmlReader.setContentHandler(loadedNodes);
+            //xmlReader.parse(convertToFileURL(pFileName));
+
+            this.nodes = loadedNodes.getNodes();
+            this.activeNode = null;
+            setActiveNode();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public int size() {
     	
     	return(this.nodes.size());

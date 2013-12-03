@@ -53,6 +53,10 @@ public class HomeBlock extends JFrame {
 		filePanel.registerObserver(TPanel);
 		//Network Engineer panel gets a copy of network config file when file is loaded
 		filePanel.registerObserver(NEPanel);
+		//Manager panel gets a copy of network config file when file is loaded
+		filePanel.registerObserver(MPanel);
+		//Security Officer panel gets a copy of network config file when file is loaded
+		filePanel.registerObserver(SOPanel);
 		//Viewer gets a copy of network config file when file is loaded
 		filePanel.registerObserver(activity);
 		
@@ -66,7 +70,6 @@ public class HomeBlock extends JFrame {
 		
 		//Console could update when simulation is executing but it is currently pulling info from the log
 		//simulation.registerObserver(console);
-
 	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -83,11 +86,11 @@ public class HomeBlock extends JFrame {
 				break;
 			}
 			case 2: {
-				//tabbedPane.add("Tester Panel", TPanel);
+				tabbedPane.add("Security Officer Panel", SOPanel);
 				break;
 			}
 			case 3: {
-				//tabbedPane.add("Tester Panel", TPanel);
+				tabbedPane.add("Manager Panel", MPanel);
 				break;
 			}
 			default: {

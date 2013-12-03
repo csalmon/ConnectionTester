@@ -11,7 +11,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
-import org.apache.log4j.Logger;
 
 import fileIO.NetworkConfig;
 import observation.Observer;
@@ -23,7 +22,6 @@ public class EntityList extends JPanel implements Observer {
 	ArrayList <JLabel> nodeLabels = new ArrayList<JLabel>();
 	ArrayList <String> nodeLocations = new ArrayList<String>();
 	NetworkConfig configFile = null;
-	private Logger rtLogger = Logger.getRootLogger();
 
 	public EntityList() {
 		setSize(259, 415);

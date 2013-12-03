@@ -25,7 +25,7 @@ public class Simulation implements Runnable, Observable {
 	public void testSimulator() {
 		try {
 			if (null == this.lActiveNode) {
-				this._lLogger.debug("No active node defined.  Unable to run simulation.");
+				//this._lLogger.debug("No active node defined.  Unable to run simulation.");
 				System.out.println("No active node defined.  Unable to run simulation.");
 				return;
 			}

@@ -2,9 +2,11 @@ package userPanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -15,9 +17,11 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
+
 import org.apache.log4j.Logger;
 
 import fileIO.NetworkConfig;
+import fileIO.XMLWriter;
 import observation.Observable;
 import observation.Observer;
 import simulator.Message;
@@ -27,7 +31,8 @@ import simulator.Node;
 public class NetworkEngineer extends JPanel implements ActionListener, Observer, Observable {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
-	
+	private final JFileChooser browser = new JFileChooser();
+	File xmlFile = null;
 	
 	JButton createNodeBtn = null;
 	JButton deleteNodeBtn = null;
@@ -99,31 +104,55 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 	
 	
 	private void editNode() {
+		if(this.configFile == null) {
+			JOptionPane.showMessageDialog(null, "You cannot edit a node in a non-existant netowrk Config File. Create a Network Config File or load one to continue.");
+			return;
+		}
 		int index = Integer.valueOf(JOptionPane.showInputDialog ( "Enter INDEX of the node you want to edit:" ));
 		/* Alright Brandon & Colby this is where stuff gets real. How in-depth do we want this? We didn't exactly design
 		 * for this explicitly.. I mean, sure its a use case that's been floating around since the beginning
 		 * but we never talked about what the interface for this use case would look like? Will it be simple?
 		 * will it allow configuration of ALL fields of a node? Will it be mighty? WILL IT?!
-		 * 
-		 * Anyway. I'm thinking I'll draft up a UI for this thing after we complete the objectives lined up
-		 * from our meeting a few days back
 		 */
-		JOptionPane.showMessageDialog(null, "HAHAAAAA you can't edit nodes!\n THE NODE IS MIGHTIER THAN YOU! COME BACK WHEN YOU'RE WORTHY");
+		JOptionPane.showMessageDialog(null, "This feature is unimplemented because we did not carry out our design with the intent to\n"
+				+ "*make* network config file--it was assummed that the XML file would be supplied.\n"
+				+ "Therefore, not implementing this use case is more in line with our design choices than implementing it.\n"
+				+ "Oh, the irony.");
 	}
 
 	private void createNetworkConfigFile() {
 		try {
-			//This throws an exception since the system can't find a file of name "newNetworkFile.xml". Brandon should probably fix this...
-			this.configFile = new NetworkConfig("newNeworkFile.xml");
-		} catch(Exception e) {
-			//this doesn't get caught...
-			JOptionPane.showMessageDialog(null, "The program is trying to find a file called 'newNetworkFile.xml'...\n"
-					+ "That doesn't make any sense! The ctor of the network config file doesn't work for creating a new file.\n"
-					+ "We need to add this ctor to NetworkConfig.java");
-		}
+			
+			browser.setSelectedFile(xmlFile);
+			
+			if (browser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+				this.configFile = new NetworkConfig();
+				FileWriter writer = new FileWriter(browser.getSelectedFile());
+				String header = "<?xml version=\"1.0\"?>" + "\n<networkconfig version=\"1.0\">";
+				String footer = "</networkconfig>";
+				writer.append(header);
+				writer.append(footer);
+				
+				System.out.println("Network Configuration saved as XML file " + browser.getSelectedFile().getAbsolutePath());
+                writer.flush();
+                writer.close();
+				
+				JOptionPane.showMessageDialog(null, "Network Configuration saved here: " + browser.getSelectedFile().getAbsolutePath() 
+						+ "\nBe sure to load it to add nodes to it.");
+
+			}else if(browser.showSaveDialog(null) == JFileChooser.CANCEL_OPTION) {
+				System.out.println("Operation Cancelled");
+            }
+		} catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "File could not be written, try again.");
+        }
 	}
 
 	private void deleteNode() {
+		if(this.configFile == null) {
+			JOptionPane.showMessageDialog(null, "You cannot delete a node from... nothing. Load a Network Config File to start deleting.");
+			return;
+		}
 		try {
 			int index = Integer.valueOf(JOptionPane.showInputDialog ( "Enter INDEX of the node you want to delete:" ));
 			this.configFile.remove(index);
@@ -138,13 +167,19 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 
 	private void createNode() {
 		try {
+			if(this.configFile == null) {
+				JOptionPane.showMessageDialog(null, "You cannot add a node to.. nothing. Create a Network Config File or load one to continue.");
+				return;
+			}
 			String newName= JOptionPane.showInputDialog ( "Enter node name:" );
 			Node newNode = new Node(newName);
-			//This doesn't work because there is no network config file.
-			this.configFile.add(newNode);
+			JOptionPane.showMessageDialog(null, "This feature is unimplemented because we did not carry out our design with the intent to\n"
+					+ "*make* network config file--it was assummed that the XML file would be supplied due to the numerous nodes that could be in a network.\n"
+					+ "Therefore, not implementing this use case is more in line with our design choices than implementing it.\n"
+					+ "Oh, the irony.");
 			
 			//NOTIFY ANY OBSERVER THAT MY NETWORK CONFIG FILE HAS CHANGED.
-			this.notifyObservers();
+			//this.notifyObservers();
 			
 		} catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "There was a mistake adding the new node. Click 'Start New File' first.");
