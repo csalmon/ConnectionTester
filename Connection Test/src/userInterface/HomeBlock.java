@@ -47,15 +47,25 @@ public class HomeBlock extends JFrame {
 		nodeList = new EntityList();
 		console = new Console();
 		
+		//EntityList gets a copy of network config file when file is loaded
 		filePanel.registerObserver(nodeList);
+		//TesterPanel gets a copy of network config file when file is loaded
 		filePanel.registerObserver(TPanel);
+		//Network Engineer panel gets a copy of network config file when file is loaded
 		filePanel.registerObserver(NEPanel);
+		//Viewer gets a copy of network config file when file is loaded
 		filePanel.registerObserver(activity);
 		
-		//Viewer needs to know what the network engineer panel does so it can react accordingly (delete node/create node, etc)
+		//Entity List needs to update when Network Engineer deletes, edits, or creates a node
 		NEPanel.registerObserver(nodeList);
+		//Viewer needs to update when Network Engineer deletes, edits, or creates a node
+		NEPanel.registerObserver(activity);
 		
+		//Viewer updates which nodes are active when simulation is executing
+		simulation.registerObserver(activity);
 		
+		//Console could update when simulation is executing but it is currently pulling info from the log
+		//simulation.registerObserver(console);
 
 	
 		tabbedPane = new JTabbedPane();

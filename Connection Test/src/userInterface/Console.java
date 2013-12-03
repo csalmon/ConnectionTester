@@ -9,11 +9,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-
 import fileIO.NetworkConfig;
 
 import javax.swing.JLabel;
@@ -22,8 +17,7 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 
 import observation.Observer;
-
-import simulator.Node;
+import simulator.Message;
 import simulator.UIConsoleAppender;
 
 public class Console extends JPanel implements Observer {
@@ -87,13 +81,12 @@ public class Console extends JPanel implements Observer {
 	
 	public void update(NetworkConfig netConfigFile)
 	{
-		System.out.println("\r\n!!!!!!!!! Console Update Was Called !!!!!!!!!!!\r\n");
-		// Intentionally left blank for now...
+		// Intentionally left blank. Console does not do anything with the network config file.
 	}
 
 	@Override
-	public void update(Node node, int flag) {
-		// Intentionally left blank for now...
+	public void update(Message message, int flag) {
+		// This is where Console may be interested but it picks up strings from the logger just fine. Observer not required.
 	}
 	
 }

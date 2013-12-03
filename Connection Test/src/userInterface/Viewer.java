@@ -1,10 +1,13 @@
 package userInterface;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -18,6 +21,7 @@ import javax.swing.JLabel;
 import org.apache.log4j.Logger;
 
 import observation.Observer;
+import simulator.Message;
 import simulator.Node;
 
 public class Viewer extends JPanel implements Observer{
@@ -29,8 +33,10 @@ public class Viewer extends JPanel implements Observer{
 	final int POSITION_CHANGE = 4;
 	ArrayList <JLabel> nodeNameLabels = new ArrayList<JLabel>();
 	ArrayList <JLabel> nodeStatusLabels = new ArrayList<JLabel>();
+	ArrayList <String> nodeLabelLocations = new ArrayList<String>();
+	ArrayList <String> nodeStatusLocations = new ArrayList<String>();
 	NetworkConfig configFile = null;
-	private Logger rtLogger = Logger.getRootLogger();
+	
 	
 	public Viewer() {
 		setSize(495, 250);
@@ -68,27 +74,59 @@ public class Viewer extends JPanel implements Observer{
 				FormFactory.DEFAULT_ROWSPEC,}));
 		JLabel lblSimulationActivity = new JLabel("Simulation Activity");
 		add(lblSimulationActivity, "2, 2, left, top");
+		
+		JLabel lblYellow = new JLabel("Red =");
+		lblYellow.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblYellow.setForeground(Color.red);
+		lblYellow.setBackground(Color.red);
+		lblYellow.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(lblYellow, "6, 2");
+		
+		JLabel lblClientNode = new JLabel("Client Node");
+		lblClientNode.setBackground(Color.red);
+		add(lblClientNode, "8, 2");
 	 
 	}
 	
 	//I realize this code is a bit of a hack because the magic numbers. I'm a bit stuck thogh because the form layout requires explicit declaration of rows/cols
 	//or else it doesn't allow me to use the 'Design' tab at will--I'd have to run the program to see the results of my code each time. Too tedious at the moment.
-	private void populateLabelList() {
+	private void populateLabelLists() {
+		//set all nodes to invisbile
+		for (int index = 0; index < nodeNameLabels.size(); index++) {
+			nodeNameLabels.get(index).setVisible(false);
+			nodeStatusLabels.get(index).setVisible(false);
+		}
+		
+		//this.repaint();
+		
 		int col = 2;
 		int row = 4;
-		for(int index = 0; index < this.numNodesInSimulation; index++) {
+		Node activeNode = this.configFile.getActiveNode();
+		for(int index = 0; index < nodeNameLabels.size(); index++) {
 			Node currentNode = this.configFile.get(index);
+			System.out.println("Populating VIEWER with this node: " + currentNode.getName());
+			
 			JLabel nodeNameLabel = new JLabel(currentNode.getName());
-			JLabel nodeStatusLabel = new JLabel("Inactive");
-			nodeNameLabels.add(nodeNameLabel);
-			nodeStatusLabels.add(nodeStatusLabel);
 			String nodeNameLoc = col + ", " + row;
+			
+			JLabel nodeStatusLabel = new JLabel("Inactive");
 			String nodeStatusLoc = col + ", " + (row+1);
 			
-			rtLogger.info(currentNode.getName() + " Name Location: " + nodeNameLoc + " Status Location: " + nodeStatusLoc);
+			if(!(activeNode == null)) {
+				if(currentNode.getNID().compareTo(activeNode.getNID()) == 0) {
+					nodeNameLabel.setForeground(Color.red);
+					nodeStatusLabel.setForeground(Color.green);
+					nodeStatusLabel.setText("ACTIVE");
+				}
+			}
+			nodeNameLabels.add(nodeNameLabel);
+			nodeLabelLocations.add(nodeNameLoc);
+			nodeStatusLabels.add(nodeStatusLabel);
+			nodeStatusLocations.add(nodeStatusLoc);
+			
 			add( nodeNameLabel, nodeNameLoc );
 			add( nodeStatusLabel, nodeStatusLoc );
-			
+
 			if( (row+3) > 17) {
 				col+=2;
 				row = 4;
@@ -102,15 +140,27 @@ public class Viewer extends JPanel implements Observer{
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
 		this.numNodesInSimulation = this.configFile.size();
-		rtLogger.debug("Viewer successfully loaded the network config file");
-		this.populateLabelList();
+		System.out.println("Viewer successfully loaded the network config file");
+		this.populateLabelLists();
 		
 	}
 
 	@Override
-	public void update(Node node, int flag) {
-		// Intentionally left blank for now...
+	public void update(Message message, int flag) {
+		ArrayList <UUID> activeUUIDs = message.getNodeIDs();
 		
+		for(UUID id : activeUUIDs) {
+			String activeNodeName = this.configFile.get(id).getName();
+			
+			for(int index = 0; index < nodeNameLabels.size(); index++) {
+				if(nodeNameLabels.get(index).getText().compareTo(activeNodeName) > 0) {
+					nodeStatusLabels.get(index).setText("Active");
+					nodeStatusLabels.get(index).setForeground(Color.green);
+				}
+			}
+		}
+		
+		//this.populateLabelLists();
 	}
 
 }

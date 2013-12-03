@@ -11,6 +11,7 @@ public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	Node lActiveNode = null;
 	Logger _lLogger = null;
+	Message lMessage = null;
 	final int UNUSED_FLAG = 0;
 	
 	public void setActiveNode(Node pActiveNode) {
@@ -39,11 +40,12 @@ public class Simulation implements Runnable, Observable {
 			// Process the active node while the simulation is running
 			this._lLogger.debug("Beginning Simulation");
 			System.out.println("Beginning Simulation");
-			Message lMessage = new Message();
+			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration
 				lMessage = lActiveNode.processMessage();
-				//TODO: pass lMessage back to the UI
+				//Pass lMessage back to the UI
+				this.notifyObservers();
 				Thread.sleep(1000);
 			}
 		} catch (Exception ex) {
@@ -99,7 +101,7 @@ public class Simulation implements Runnable, Observable {
 		for (Observer ob : observers) {
             System.out.println("Notifying Observers about a node change.");
             
-            ob.update(this.lActiveNode,UNUSED_FLAG);
+            ob.update(this.lMessage,UNUSED_FLAG);
 		}
 		
 	}

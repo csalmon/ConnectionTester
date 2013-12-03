@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import observation.Observer;
-import simulator.Node;
+import simulator.Message;
 import simulator.Simulation;
 
 public class Tester extends JPanel implements ActionListener, Observer {
@@ -29,7 +29,7 @@ public class Tester extends JPanel implements ActionListener, Observer {
 	JButton stopSimBtn = null;
 	boolean simulationStarted = false;
 	Thread simulationThread = null;
-	NetworkConfig configFile;
+	NetworkConfig configFile = null;
 	
 	public Tester(Simulation simulation) {
 		setSize(300, 100);
@@ -58,7 +58,8 @@ public class Tester extends JPanel implements ActionListener, Observer {
 		stopSimBtn = new JButton("Stop Simulation");
 		stopSimBtn.addActionListener(this);
 		add(stopSimBtn, "4, 4, left, top");
-		this.configFile = null;
+		
+		this.simulation = simulation;
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class Tester extends JPanel implements ActionListener, Observer {
 	}
 
 	@Override
-	public void update(Node node, int flag) {
+	public void update(Message message, int flag) {
 		// TODO Auto-generated method stub
 		
 	}

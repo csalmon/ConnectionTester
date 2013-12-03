@@ -2,34 +2,32 @@ package userPanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
-import java.util.UUID;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
-
-import fileIO.NetworkConfig;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import org.apache.log4j.Logger;
 
+import fileIO.NetworkConfig;
 import observation.Observable;
 import observation.Observer;
+import simulator.Message;
 import simulator.Node;
-import simulator.Simulation;
+
 
 public class NetworkEngineer extends JPanel implements ActionListener, Observer, Observable {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
-	private Logger rtLogger = Logger.getRootLogger();
+	
 	
 	JButton createNodeBtn = null;
 	JButton deleteNodeBtn = null;
@@ -82,19 +80,19 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == createNodeBtn ) {			
-			rtLogger.debug("Pressed create Node button");
+			System.out.println("Pressed create Node button");
 			this.createNode();
 		
 		} else if(e.getSource() == deleteNodeBtn) {
-			rtLogger.debug("Pressed delete Node button");
+			System.out.println("Pressed delete Node button");
 			this.deleteNode();
 			
 		} else if(e.getSource() == editNodeBtn) {			
-			rtLogger.debug("Pressed edit Node button");
+			System.out.println("Pressed edit Node button");
 			this.editNode();
 			
 		} else if(e.getSource() == newFileBtn) {
-			rtLogger.debug("Pressed new File button");
+			System.out.println("Pressed new File button");
 			this.createNetworkConfigFile();
 		}
 	}
@@ -157,12 +155,12 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 	@Override
 	public void update(NetworkConfig netConfigFile) {
 		this.configFile = netConfigFile;
-		rtLogger.info("Network engineer successfully loaded the network config file");
+		System.out.println("Network engineer successfully loaded the network config file");
 		
 	}
 
 	@Override
-	public void update(Node node, int flag) {
+	public void update(Message message, int flag) {
 		//This method intentionally left blank. No reason for NetowkEngineer to RECEIVE updates about individual nodes...
 		
 	}
