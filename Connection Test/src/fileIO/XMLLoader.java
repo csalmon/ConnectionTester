@@ -30,6 +30,7 @@ public class XMLLoader extends DefaultHandler {
     private InetAddress channelAddr;
     private InetAddress remoteAddr;
     private int channelPort;
+    private int remotePort;
     private String channelTransport;
     private String channelApplication;
     private String fileVersion;
@@ -51,6 +52,7 @@ public class XMLLoader extends DefaultHandler {
         this.channelAddr = null;
         this.remoteAddr = null;
         this.channelPort = 0;
+        this.remotePort = 0;
         this.fileVersion = new String();
         this.channelTransport = new String();
         this.channelApplication = new String();
@@ -114,7 +116,7 @@ public class XMLLoader extends DefaultHandler {
             rtLogger.info("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
-            this.currInitiator.setListener(this.remoteAddr, this.channelPort);
+            this.currInitiator.setListener(this.remoteAddr, this.remotePort);
             this.currInitiator.setTransportProtocol(this.channelTransport);
             this.currInitiator.setApplicationProtocol(this.channelApplication);
             this.currNode.addInitiator(this.currInitiator);
@@ -178,6 +180,8 @@ public class XMLLoader extends DefaultHandler {
                     this.currInitiator.setCID(UUID.fromString(pValue));
                 } else if (pProperty.equals("remote-ip")) {
                 	this.remoteAddr = InetAddress.getByName(pValue);
+                } else if (pProperty.equals("remote-port")) {
+                    this.remotePort = Integer.parseInt(pValue);
                 } else if (pProperty.equals("transport-protocol")) {
                 	this.channelTransport = pValue;
                 } else if (pProperty.equals("application-protocol")) {
@@ -207,8 +211,9 @@ public class XMLLoader extends DefaultHandler {
         this.tagValueList.add("lport");
         this.tagValueList.add("IUUID");
         this.tagValueList.add("iip-address");
-        this.tagValueList.add("remote-ip");
         this.tagValueList.add("iport");
+        this.tagValueList.add("remote-ip");
+        this.tagValueList.add("remote-port");
         this.tagValueList.add("transport-protocol");
         this.tagValueList.add("application-protocol");
 

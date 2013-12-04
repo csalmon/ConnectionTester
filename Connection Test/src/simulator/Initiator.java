@@ -20,10 +20,10 @@ public class Initiator extends Channel {
 	public void openConnection() {
 		try {
 			this.channel = DatagramChannel.open();
-			//this.channel.socket().bind(this.initiator);
+			this.channel.socket().bind(this.initiator);
 			this.channel.configureBlocking(false);       
 			this.channel.connect(this.listener);
-			this._logger.debug("Initiator connection is open.");
+			this._logger.info("Initiator: " + this.getCID().toString().substring(30) + " connection is open.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -36,11 +36,11 @@ public class Initiator extends Channel {
 				if (this.channel.isConnected()) {	     
 					this.buffer = ByteBuffer.wrap(Serializer.serialize(pMessage));
 					this.channel.send(buffer,listener);
-					this._logger.debug("Initiator has sent a message.");
-					this._logger.debug("Sent message's file version: " + pMessage.getFileVersion());
+					this._logger.info("Initiator: " + this.getCID().toString().substring(30) + " has sent a message.");
+					this._logger.info("Sent message's file version: " + pMessage.getFileVersion());
 					ArrayList<UUID> lNodeIDs = pMessage.getNodeIDs();
     				for (int index = 0; index < lNodeIDs.size(); index++) {
-    					this._logger.debug("Sent Node UUID " + Integer.toString(index) + ": " + lNodeIDs.get(index));
+    					this._logger.info("Sent Node UUID " + Integer.toString(index) + ": " + lNodeIDs.get(index).toString().substring(30));
     				}
 	        	 }
 	        }
@@ -53,7 +53,7 @@ public class Initiator extends Channel {
 		try {
 			if (this.channel.isConnected()) { 
 	      		this.channel.close();
-	      		this._logger.debug("Initiator connection is closed.");
+	      		this._logger.info("Initiator: " + this.getCID().toString().substring(30) + "  connection is closed.");
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

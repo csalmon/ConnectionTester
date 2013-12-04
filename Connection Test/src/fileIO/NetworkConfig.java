@@ -237,17 +237,27 @@ public class NetworkConfig {
     	return(true);
     }
     
-    private Node findActiveNode(ArrayList<InetAddress> pNetDeviceIPs) {    	
-    	for (int nodeIndex = 0; nodeIndex < this.nodes.size(); nodeIndex++) {
-    		ArrayList<InetAddress> nodeIPs = new ArrayList<InetAddress>();
-    		nodeIPs.addAll(this.nodes.get(nodeIndex).getExternalIPs());
-    		nodeIPs.addAll(this.nodes.get(nodeIndex).getInternalIPs());
-    		for (int ipIndex = 0; ipIndex < nodeIPs.size(); ipIndex++) {
-    			if (pNetDeviceIPs.contains(nodeIPs.get(ipIndex))) {
-    				return(this.nodes.get(nodeIndex));
-    			}
-    		}
+    private Node findActiveNode(ArrayList<InetAddress> pNetDeviceIPs) {
+    	try {
+	    	InetAddress specialIP = InetAddress.getByName("1.1.1.1");
+	    	for (int nodeIndex = 0; nodeIndex < this.nodes.size(); nodeIndex++) {
+	    		ArrayList<InetAddress> nodeIPs = new ArrayList<InetAddress>();
+	    		nodeIPs.addAll(this.nodes.get(nodeIndex).getExternalIPs());
+	    		nodeIPs.addAll(this.nodes.get(nodeIndex).getInternalIPs());
+	    		for (int ipIndex = 0; ipIndex < nodeIPs.size(); ipIndex++) {
+	    			if (pNetDeviceIPs.contains(nodeIPs.get(ipIndex)) ||
+	    				pNetDeviceIPs.contains(specialIP)) {
+	    				return(this.nodes.get(nodeIndex));
+	    			}
+	    			if (nodeIPs.contains(specialIP)) {
+		    			return(this.nodes.get(nodeIndex));
+		    		}
+	    		}
+	    	}
+	    	return(null);
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    		return(null);
     	}
-    	return(null);
     }
 }

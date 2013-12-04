@@ -25,7 +25,7 @@ public class Simulation implements Runnable, Observable {
 	public void testSimulator() {
 		try {
 			if (null == this.lActiveNode) {
-				//this._lLogger.debug("No active node defined.  Unable to run simulation.");
+				this._lLogger.info("No active node defined.  Unable to run simulation.");
 				System.out.println("No active node defined.  Unable to run simulation.");
 				return;
 			}
@@ -34,11 +34,11 @@ public class Simulation implements Runnable, Observable {
 			
 			// Activate Node Listeners
 			this.lActiveNode.startListeners();
-			this._lLogger.debug("Listeners activated");
+			this._lLogger.info("Listeners activated");
 			System.out.println("Listeners activated");
 			
 			// Process the active node while the simulation is running
-			this._lLogger.debug("Beginning Simulation");
+			this._lLogger.info("Beginning Simulation");
 			System.out.println("Beginning Simulation");
 			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
@@ -54,7 +54,7 @@ public class Simulation implements Runnable, Observable {
 				Thread.sleep(1000);
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
-				_lLogger.debug("Simulation stopped");
+				_lLogger.info("Simulation stopped");
 				System.out.println("Simulation stopped");
 				_lLogger = null;
 			} catch (Exception iex) {
@@ -71,7 +71,7 @@ public class Simulation implements Runnable, Observable {
 				}
 				
 				if (null != _lLogger) {
-					_lLogger.debug("Simulation ended");
+					_lLogger.info("Simulation ended");
 					System.out.println("Simulation ended");
 				}
 			} catch (Exception ex) {

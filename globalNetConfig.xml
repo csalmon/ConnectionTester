@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<networkconfig version="1.0" approved="false">
+   <node>
+      <NUUID>25060046-dc5c-494c-a822-176e4634e8c0</NUUID>
+      <name>Eeny</name>
+      <operating-system>Mac OSX</operating-system>
+      <required-software></required-software>
+      <external-ip>129.123.1.1</external-ip>
+      <security-zone>Alpha</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Acme Company</organization>
+         <contact-person>Bob Smith</contact-person>
+         <contact-phone>435-555-7676</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>40f59530-c109-4807-9cfe-de9cb2421e28</LUUID>
+         <lip-address>129.123.1.1</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>fd0840ee-c91f-4839-88fb-c3095ccfb409</IUUID>
+         <iip-address>129.123.1.1</iip-address>
+         <iport>7778</iport>
+         <remote-ip>129.123.1.1</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>ac5091ea-7361-404f-8b67-9a5d8a5e4e9b</NUUID>
+      <name>Meeny</name>
+      <operating-system>Mac OSX</operating-system>
+      <required-software></required-software>
+      <external-ip>129.123.1.2</external-ip>
+      <external-ip>129.123.1.3</external-ip>
+      <security-zone>Bravo</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Ace Company</organization>
+         <contact-person>Jack Smith</contact-person>
+         <contact-phone>435-666-8282</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>daa96b89-a57c-43b8-9ab3-f3dcaed55b0d</LUUID>
+         <lip-address>129.123.1.2</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>1ef9890b-078e-45ec-91a5-b7445dd06a36</IUUID>
+         <iip-address>129.123.1.3</iip-address>
+         <iport>7778</iport>
+         <remote-ip>129.123.1.2</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>4c3e23de-acbf-495a-9509-ccccd0ca2ddd</NUUID>
+      <name>Miny</name>
+      <operating-system>Linux Ubuntu</operating-system>
+      <required-software></required-software>
+      <external-ip>129.123.1.4</external-ip>
+      <security-zone>Charlie</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Foo Company</organization>
+         <contact-person>Roger Smith</contact-person>
+         <contact-phone>435-444-9191</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>fb7601d6-5943-4b6b-a896-d4f98e0458ba</LUUID>
+         <lip-address>129.123.1.4</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>4da9aa31-c833-4093-a557-518a2a6db0fd</IUUID>
+         <iip-address>129.123.1.4</iip-address>
+         <iport>7778</iport>
+         <remote-ip>129.123.1.2</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>be9b13ea-38f5-4e2e-ae89-0817f90a7fba</NUUID>
+      <name>Moe</name>
+      <operating-system>Linux Ubuntu</operating-system>
+      <required-software></required-software>
+      <external-ip>129.123.1.5</external-ip>
+      <external-ip>129.123.1.6</external-ip>
+      <external-ip>129.123.1.7</external-ip>
+      <security-zone>Delta</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Bar Company</organization>
+         <contact-person>Mike Smith</contact-person>
+         <contact-phone>435-999-1212</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>cdae1a06-c620-441c-9e6f-bc102a263bf8</LUUID>
+         <lip-address>129.123.1.5</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>c1d5142a-ebf4-4351-a7ab-b817ee123bbe</IUUID>
+         <iip-address>129.123.1.5</iip-address>
+         <iport>7778</iport>
+         <remote-ip>129.123.1.1</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+      <initiator>
+         <IUUID>e8bcd46a-7869-4e38-bc1e-8f5d5de96b62</IUUID>
+         <iip-address>129.123.1.6</iip-address>
+         <iport>7778</iport>
+         <remote-ip>129.123.1.4</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>a469853c-cb0f-483f-80a9-c300f58a7fe7</NUUID>
+      <name>My Node</name>
+      <operating-system>Windows 7</operating-system>
+      <required-software></required-software>
+      <external-ip>1.1.1.1</external-ip>
+      <security-zone>Zulu</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Utah State University</organization>
+         <contact-person>CS Department</contact-person>
+         <contact-phone>435-797-2451</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>e82425b7-e028-4341-ae3d-84e05985f948</LUUID>
+         <lip-address>127.0.0.1</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>598d7716-5cf3-4df7-bc93-cfcfcc7e6daa</IUUID>
+         <iip-address>127.0.0.1</iip-address>
+         <iport>7778</iport>
+         <remote-ip>127.0.0.1</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+      <initiator>
+         <IUUID>4f150e61-58d5-4e8b-bcae-ed0c9855ea5a</IUUID>
+         <iip-address>127.0.0.1</iip-address>
+         <iport>7779</iport>
+         <remote-ip>127.0.0.1</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+</networkconfig>
