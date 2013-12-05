@@ -61,6 +61,16 @@ public class Console extends JPanel implements Observer {
 	public void add(String strArg)
 	{
 		textLines.add(strArg);
+		this.update();
+	}
+	
+	public void update() {
+		textList.setListData(textLines.toArray());
+		
+		int size = textList.getModel().getSize();
+		textList.ensureIndexIsVisible(size-1);
+		
+		scrollPane.setViewportView(textList);
 	}
 	
 	@Override
@@ -71,10 +81,7 @@ public class Console extends JPanel implements Observer {
 
 	@Override
 	public void update(Message message, int flag) {
-		textList.setListData(textLines.toArray());
-		
-		int size = textList.getModel().getSize();
-		textList.ensureIndexIsVisible(size-1);
+		// Intentionally left blank for now
 	}
 	
 }

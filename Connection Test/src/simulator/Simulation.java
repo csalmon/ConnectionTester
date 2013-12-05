@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	Node lActiveNode = null;
-	Logger _lLogger = null;
+	Logger _lLogger = Logger.getLogger(Simulation.class);
 	Message lMessage = null;
 	final int UNUSED_FLAG = 0;
 	
@@ -23,20 +23,19 @@ public class Simulation implements Runnable, Observable {
 	}
 	
 	public void testSimulator() {
-		this._lLogger = Logger.getLogger(Simulation.class);
 		
 		try {
 			if (null == this.lActiveNode) {
-				this._lLogger.info("No active node defined.  Unable to run simulation.");
+				_lLogger.info("No active node defined.  Unable to run simulation.");
 				return;
 			}
 			
 			// Activate Node Listeners
 			this.lActiveNode.startListeners();
-			this._lLogger.info("Listeners activated");
+			_lLogger.info("Listeners activated");
 			
 			// Process the active node while the simulation is running
-			this._lLogger.info("Beginning Simulation");
+			_lLogger.info("Beginning Simulation");
 			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration
