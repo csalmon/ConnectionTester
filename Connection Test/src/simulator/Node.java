@@ -147,7 +147,6 @@ public class Node {
 	public void startListeners() {
 		
 		// For every listener, create a new listening thread
-		//TODO: try without a loop for each listener because selector should handle multiple channels
 		for (int index = 0; index < this.listeners.size(); index++) {
 			this._logger.debug("Activating listener " + Integer.toString(index));
 			String lTName = new String("listener");
@@ -188,6 +187,7 @@ public class Node {
 	
 		for (int index = 0; index < this.listenerThreads.size(); index++) {
 			this.listenerThreads.get(index).interrupt();
+			this.listenerThreads.remove(index);
 		}
 	}
 	

@@ -30,7 +30,6 @@ public class Simulation implements Runnable, Observable {
 				return;
 			}
 			
-			
 			this._lLogger = Logger.getLogger(Simulation.class);
 			
 			// Activate Node Listeners

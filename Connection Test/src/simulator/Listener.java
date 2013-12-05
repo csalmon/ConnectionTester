@@ -114,19 +114,8 @@ public class Listener extends Channel implements Runnable {
 			}
 			this.channelMgr.close();
 		} catch (Exception ex) {
-			try {
-				this.channelMgr.close();
-			} catch (Exception iex) {
-				iex.printStackTrace();
-			}
 			ex.printStackTrace();
-		} finally {
-			try {
-				//this.channelMgr.close();
-			} catch (Exception iex) {
-				iex.printStackTrace();
-			}
-		}
+		} 
 	}
 	
 	private Message convertBufferToMessage(ByteBuffer pBuffer) {
