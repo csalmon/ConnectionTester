@@ -30,16 +30,17 @@ public class Simulation implements Runnable, Observable {
 				return;
 			}
 			
+			
 			this._lLogger = Logger.getLogger(Simulation.class);
 			
 			// Activate Node Listeners
 			this.lActiveNode.startListeners();
 			this._lLogger.info("Listeners activated");
-			System.out.println("Listeners activated");
+			//System.out.println("Listeners activated");
 			
 			// Process the active node while the simulation is running
 			this._lLogger.info("Beginning Simulation");
-			System.out.println("Beginning Simulation");
+			//System.out.println("Beginning Simulation");
 			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration

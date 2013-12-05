@@ -114,9 +114,19 @@ public class Listener extends Channel implements Runnable {
 			}
 			this.channelMgr.close();
 		} catch (Exception ex) {
+			try {
+				this.channelMgr.close();
+			} catch (Exception iex) {
+				iex.printStackTrace();
+			}
 			ex.printStackTrace();
+		} finally {
+			try {
+				//this.channelMgr.close();
+			} catch (Exception iex) {
+				iex.printStackTrace();
+			}
 		}
-		
 	}
 	
 	private Message convertBufferToMessage(ByteBuffer pBuffer) {
@@ -132,6 +142,7 @@ public class Listener extends Channel implements Runnable {
 		try {
 			this.channel.socket().close();
           	this.channel.close();
+          	this.channelMgr.close();
           	this._logger.info("Listening channel is closed.");
 		} catch (Exception ex) {
 			
