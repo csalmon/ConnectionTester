@@ -66,9 +66,11 @@ public class SecurityOfficer extends JPanel implements ActionListener, Observer 
 		}
 		
 		if(e.getSource() == approveBtn ) {
+			this.configFile.setApproval(true);
 			JOptionPane.showMessageDialog(null, "This Network Configuration File has been APPROVED.");
 			
 		} else if(e.getSource() == denyBtn) {
+			this.configFile.setApproval(false);
 			JOptionPane.showMessageDialog(null, "This Network Configuration File has been DENIED.");
 			
 		}

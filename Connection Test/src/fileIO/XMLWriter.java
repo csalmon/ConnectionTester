@@ -10,14 +10,17 @@ import simulator.Node;
 public class XMLWriter
 {
 	public XMLWriter(){};
-	final public int FIRST = 0;
 	String TAB = "   ";
 	
 	public String writeXML(NetworkConfig currConfig)
 	{
 		String xmlStr = new String("");
-		Node currNode = currConfig.get(FIRST);
-		xmlStr += "<?xml version=\"" + currNode.getFileVersion() + "\"?>\r\n<networkconfig version=\"" + currNode.getFileVersion() + "\">\r\n";
+		Node currNode = null;
+		String approval = new String("false");
+		if (currConfig.isApproved()) {
+			approval = new String("true");
+		}
+		xmlStr += "<?xml version=\"1.0\"?>\r\n<networkconfig version=\"" + currConfig.getFileVersion() + "\" approved=\"" + approval + "\">\r\n";
 		
 		for (int index = 0; index < currConfig.size(); index++)
 		{
@@ -30,30 +33,16 @@ public class XMLWriter
 			xmlStr += TAB + TAB + "<required-software>" + currNode.getRequiredSoftware() + "</required-software>\r\n";
 			
 			ArrayList<InetAddress> aExternalIPs = currNode.getExternalIPs();
-			//if (aExternalIPs.isEmpty())
-			//{
-			//	xmlStr += TAB + TAB + "<external-ip></external-ip>\r\n";
-			//}
-			//else
-			//{
-				for(InetAddress currExternalIP : aExternalIPs)
-				{
-					xmlStr += TAB + TAB + "<external-ip>" + currExternalIP.getHostAddress() + "</external-ip>\r\n";
-				}
-			//}
+			for(InetAddress currExternalIP : aExternalIPs)
+			{
+				xmlStr += TAB + TAB + "<external-ip>" + currExternalIP.getHostAddress() + "</external-ip>\r\n";
+			}
 			
 			ArrayList<InetAddress> aInternalIPs = currNode.getInternalIPs();
-			//if (aInternalIPs.isEmpty())
-			//{
-			//	xmlStr += TAB + TAB + "<internal-ip></internal-ip>\r\n";
-			//}
-			//else
-			//{
-				for (InetAddress currInternalIP : aInternalIPs)
-				{
-					xmlStr += TAB + TAB + "<internal-ip>" + currInternalIP.getHostAddress() + "</internal-ip>\r\n";
-				}
-			//}
+			for (InetAddress currInternalIP : aInternalIPs)
+			{
+				xmlStr += TAB + TAB + "<internal-ip>" + currInternalIP.getHostAddress() + "</internal-ip>\r\n";
+			}
 			
 			xmlStr += TAB + TAB + "<security-zone>" + currNode.getSecurityZone() + "</security-zone>\r\n";
 			xmlStr += TAB + TAB + "<status>" + currNode.getState() + "</status>\r\n";
@@ -82,11 +71,8 @@ public class XMLWriter
 				xmlStr += TAB + TAB + TAB + "<IUUID>" + currInitiator.getCID() + "</IUUID>\r\n";
 				xmlStr += TAB + TAB + TAB + "<iip-address>" + currInitiator.getInitiatorAddr().getHostAddress() + "</iip-address>\r\n";
 				xmlStr += TAB + TAB + TAB + "<iport>" + currInitiator.getInitiatorPort() + "</iport>\r\n";
-				//if (currNode.getName().equals("Test Node"))
-				//{
-					xmlStr += TAB + TAB + TAB + "<remote-ip>" + currInitiator.getListenerAddr().getHostAddress() + "</remote-ip>\r\n";
-					xmlStr += TAB + TAB + TAB + "<remote-port>" + currInitiator.getListenerPort() + "</remote-port>\r\n";
-				//}
+				xmlStr += TAB + TAB + TAB + "<remote-ip>" + currInitiator.getListenerAddr().getHostAddress() + "</remote-ip>\r\n";
+				xmlStr += TAB + TAB + TAB + "<remote-port>" + currInitiator.getListenerPort() + "</remote-port>\r\n";
 				xmlStr += TAB + TAB + TAB + "<transport-protocol>" + currInitiator.getTransportProtocol() + "</transport-protocol>\r\n";
 				xmlStr += TAB + TAB + TAB + "<application-protocol>" + currInitiator.getApplicationProtocol() + "</application-protocol>\r\n";
 				xmlStr += TAB + TAB + "</initiator>\r\n";

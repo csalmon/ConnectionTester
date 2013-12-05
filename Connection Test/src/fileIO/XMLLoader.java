@@ -34,11 +34,14 @@ public class XMLLoader extends DefaultHandler {
     private String channelTransport;
     private String channelApplication;
     private String fileVersion;
+    private boolean approval;
     private final String NODE = new String("node");
     private final String LISTENER = new String("listener");
     private final String INITIATOR = new String("initiator");
     private final String NETWORKCONFIG = new String("networkconfig");
     private final String VERSION = new String("version");
+    private final String APPROVAL = new String("approved");
+    private final String APPROVED = new String("true");
     private Logger rtLogger = Logger.getRootLogger();
 
     public XMLLoader() {
@@ -54,6 +57,7 @@ public class XMLLoader extends DefaultHandler {
         this.channelPort = 0;
         this.remotePort = 0;
         this.fileVersion = new String();
+        this.approval = false;
         this.channelTransport = new String();
         this.channelApplication = new String();
         initTags();
@@ -68,6 +72,11 @@ public class XMLLoader extends DefaultHandler {
         this.openTags.push(pQName);
         if (this.NETWORKCONFIG.equals(pQName)) {
             this.fileVersion = pAttributes.getValue(this.VERSION);
+            if (this.APPROVED.equals(pAttributes.getValue(this.APPROVAL))) {
+            	this.approval = true;
+            } else {
+            	this.approval = false;
+            }
         } else if (this.NODE.equals(pQName)) {
             this.currNode = new Node(this.fileVersion);
             rtLogger.info("Creating a new node.");
@@ -129,6 +138,14 @@ public class XMLLoader extends DefaultHandler {
         return(this.nodes);
     }
 
+    public String getFileVersion() {
+    	return(this.fileVersion);
+    }
+    
+    public boolean getApproval() {
+    	return(this.approval);
+    }
+    
     private void addNodeValue(String pProperty, String pValue) {
         try {
             if (null != this.currNode) {

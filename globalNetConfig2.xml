@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<networkconfig version="1.0">
+<networkconfig version="1.0" approved="true">
    <node>
       <NUUID>25060046-dc5c-494c-a822-176e4634e8c0</NUUID>
       <name>Eeny</name>

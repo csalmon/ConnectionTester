@@ -20,6 +20,8 @@ import simulator.Node;
 
 public class NetworkConfig {
     
+	private boolean approved;
+	private String fileVersion;
 	private ArrayList<Node> nodes;
 	private Node activeNode;
 
@@ -36,37 +38,30 @@ public class NetworkConfig {
             XMLReader xmlReader = saxParser.getXMLReader();
             XMLLoader loadedNodes = new XMLLoader();
             xmlReader.setContentHandler(loadedNodes);
-            xmlReader.parse(convertToFileURL(pFileName));
+            if (null != pFileName) {
+            	xmlReader.parse(convertToFileURL(pFileName));
+            }
 
             this.nodes = loadedNodes.getNodes();
             this.activeNode = null;
             setActiveNode();
+            this.fileVersion = loadedNodes.getFileVersion();
+            this.approved = loadedNodes.getApproval();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+    public String getFileVersion() {
+    	return(this.fileVersion);
+    }
     
-    public NetworkConfig() {
-        try {
-            // obtain and configure a SAX based parser
-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-            saxParserFactory.setNamespaceAware(true);
-
-            // obtain object for SAX parser
-            SAXParser saxParser = saxParserFactory.newSAXParser();
-
-            // obtain an XML reader
-            XMLReader xmlReader = saxParser.getXMLReader();
-            XMLLoader loadedNodes = new XMLLoader();
-            xmlReader.setContentHandler(loadedNodes);
-            //xmlReader.parse(convertToFileURL(pFileName));
-
-            this.nodes = loadedNodes.getNodes();
-            this.activeNode = null;
-            setActiveNode();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public boolean isApproved() {
+    	return(this.approved);
+    }
+    
+    public void setApproval(boolean pState) {
+    	this.approved = pState;
     }
     
     public int size() {

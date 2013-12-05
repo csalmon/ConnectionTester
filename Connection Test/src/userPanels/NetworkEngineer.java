@@ -126,7 +126,7 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 			browser.setSelectedFile(xmlFile);
 			
 			if (browser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-				this.configFile = new NetworkConfig();
+				this.configFile = new NetworkConfig(null);
 				FileWriter writer = new FileWriter(browser.getSelectedFile());
 				String header = "<?xml version=\"1.0\"?>" + "\n<networkconfig version=\"1.0\">";
 				String footer = "</networkconfig>";
