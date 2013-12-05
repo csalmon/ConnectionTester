@@ -47,7 +47,7 @@ public class Simulation implements Runnable, Observable {
 		} catch (Exception ex) {
 			try {
 				// Wait for listener to finish its debugging I/O
-				Thread.sleep(1000);
+				//Thread.sleep(500);
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
 				_lLogger.info("Simulation stopped");
@@ -59,7 +59,7 @@ public class Simulation implements Runnable, Observable {
 		} finally {
 			try {
 				// Wait for listener to finish its debugging I/O
-				Thread.sleep(1000);
+				//Thread.sleep(500);
 				if (null != this.lActiveNode) {
 					this.lActiveNode.stopListeners();
 					lActiveNode = null;
