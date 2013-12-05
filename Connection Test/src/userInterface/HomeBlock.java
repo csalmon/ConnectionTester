@@ -68,8 +68,8 @@ public class HomeBlock extends JFrame {
 		//Viewer updates which nodes are active when simulation is executing
 		simulation.registerObserver(activity);
 		
-		//Console could update when simulation is executing but it is currently pulling info from the log
-		//simulation.registerObserver(console);
+		//Console updates when simulation is executing
+		simulation.registerObserver(console);
 	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));

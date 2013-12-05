@@ -98,7 +98,7 @@ public class Listener extends Channel implements Runnable {
 	        			this.buffer.flip();
 	        			//New Input Message
 	        			if (this.buffer.hasRemaining()) {
-	        				this._logger.info("Received message from: " + destAddress.getAddress().toString() + " port: " + destAddress.getPort());
+	        				this._logger.info("Received message from: " + destAddress.getAddress().getHostAddress() + " port: " + destAddress.getPort());
 	        				Message lMessage = convertBufferToMessage(this.buffer);
 	        				this._logger.info("Received message's file version: " + lMessage.getFileVersion());
 	        				ArrayList<UUID> lNodeIDs = lMessage.getNodeIDs();

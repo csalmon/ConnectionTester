@@ -79,13 +79,13 @@ public class XMLLoader extends DefaultHandler {
             }
         } else if (this.NODE.equals(pQName)) {
             this.currNode = new Node(this.fileVersion);
-            rtLogger.info("Creating a new node.");
+            rtLogger.debug("Creating a new node.");
         } else if (this.LISTENER.equals(pQName)) {
             this.currListener = new Listener(null, null, null);
-            rtLogger.info("Creating a new listener.");
+            rtLogger.debug("Creating a new listener.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator = new Initiator(null, null);
-            rtLogger.info("Creating a new initiator.");
+            rtLogger.debug("Creating a new initiator.");
         }
     }
 
@@ -114,7 +114,7 @@ public class XMLLoader extends DefaultHandler {
         if (this.NODE.equals(pQName)) {
             this.nodes.add(this.currNode);
             //this.currNode = null;
-            rtLogger.info("New node ["  + currNode.getNID().toString().substring(30) + "] added to network configuration");
+            rtLogger.debug("New node ["  + currNode.getNID().toString().substring(30) + "] added to network configuration");
             this.currNode = null;
         } else if (this.LISTENER.equals(pQName)) {
             this.currListener.setListener(this.channelAddr, this.channelPort);
@@ -122,7 +122,7 @@ public class XMLLoader extends DefaultHandler {
             this.currListener.setApplicationProtocol(this.channelApplication);
             this.currNode.addListener(this.currListener);
             clearElementVariables(this.currListener);
-            rtLogger.info("New listener added to the node.");
+            rtLogger.debug("New listener added to the node.");
         } else if (this.INITIATOR.equals(pQName)) {
             this.currInitiator.setInitiator(this.channelAddr, this.channelPort);
             this.currInitiator.setListener(this.remoteAddr, this.remotePort);
@@ -130,7 +130,7 @@ public class XMLLoader extends DefaultHandler {
             this.currInitiator.setApplicationProtocol(this.channelApplication);
             this.currNode.addInitiator(this.currInitiator);
             clearElementVariables(this.currInitiator);
-            rtLogger.info("New initiator added to the node.");
+            rtLogger.debug("New initiator added to the node.");
         }
     }
 
