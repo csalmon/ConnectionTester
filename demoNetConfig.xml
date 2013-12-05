@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<networkconfig version="1.0" approved="true">
+   <node>
+      <NUUID>25060046-dc5c-494c-a822-176e4634e8c0</NUUID>
+      <name>Mike's Laptop</name>
+      <operating-system>Windows 7</operating-system>
+      <required-software></required-software>
+      <external-ip>***PUT Mike's Laptop's WIRELESS IP ADDRESS HERE***</external-ip>
+      <security-zone>Alpha</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Mike's Company</organization>
+         <contact-person>Mike Ulmer</contact-person>
+         <contact-phone>435-555-7676</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>40f59530-c109-4807-9cfe-de9cb2421e28</LUUID>
+         <lip-address>***PUT Mike's Laptop's WIRELESS IP ADDRESS HERE***</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>fd0840ee-c91f-4839-88fb-c3095ccfb409</IUUID>
+         <iip-address>***PUT Mike's Laptop's WIRELESS IP ADDRESS HERE***</iip-address>
+         <iport>7778</iport>
+         <remote-ip>***PUT Colby's Laptop's WIRELESS IP ADDRESS HERE***</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>ac5091ea-7361-404f-8b67-9a5d8a5e4e9b</NUUID>
+      <name>Colby's Laptop</name>
+      <operating-system>Windows 7</operating-system>
+      <required-software></required-software>
+      <external-ip>***PUT Colby's Laptop's WIRELESS IP ADDRESS HERE***</external-ip>
+      <security-zone>Bravo</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Colby's Company</organization>
+         <contact-person>Colby Salmon</contact-person>
+         <contact-phone>435-666-8282</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>daa96b89-a57c-43b8-9ab3-f3dcaed55b0d</LUUID>
+         <lip-address>***PUT Colby's Laptop's WIRELESS IP ADDRESS HERE***</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>1ef9890b-078e-45ec-91a5-b7445dd06a36</IUUID>
+         <iip-address>***PUT Colby's Laptop's WIRELESS IP ADDRESS HERE***</iip-address>
+         <iport>7778</iport>
+         <remote-ip>***PUT Brandon's Laptop's WIRELESS IP ADDRESS HERE***</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+   <node>
+      <NUUID>4c3e23de-acbf-495a-9509-ccccd0ca2ddd</NUUID>
+      <name>Brandon's Laptop</name>
+      <operating-system>Mac OSX</operating-system>
+      <required-software></required-software>
+      <external-ip>***PUT Brandon's Laptop's WIRELESS IP ADDRESS HERE***</external-ip>
+      <security-zone>Charlie</security-zone>
+      <status>ACTIVE</status>
+      <contact-info>
+         <organization>Brandon's Umbrella Company</organization>
+         <contact-person>Brandon Chambers</contact-person>
+         <contact-phone>435-444-9191</contact-phone>
+      </contact-info>
+      <listener>
+         <LUUID>fb7601d6-5943-4b6b-a896-d4f98e0458ba</LUUID>
+         <lip-address>***PUT Brandon's Laptop's WIRELESS IP ADDRESS HERE***</lip-address>
+         <lport>7777</lport>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </listener>
+      <initiator>
+         <IUUID>4da9aa31-c833-4093-a557-518a2a6db0fd</IUUID>
+         <iip-address>***PUT Brandon's Laptop's WIRELESS IP ADDRESS HERE***</iip-address>
+         <iport>7778</iport>
+         <remote-ip>***PUT Mike's Laptop's WIRELESS IP ADDRESS HERE***</remote-ip>
+         <remote-port>7777</remote-port>
+         <transport-protocol>UDP</transport-protocol>
+         <application-protocol></application-protocol>
+      </initiator>
+   </node>
+</networkconfig>
