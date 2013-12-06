@@ -9,17 +9,25 @@ import org.apache.log4j.Logger;
 
 public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
-	Node lActiveNode = null;
-	Logger _lLogger = null;
-	Message lMessage = null;
+	Node lActiveNode;
+	Logger _lLogger;
+	Message lMessage;
+	int numNodes;
 	final int UNUSED_FLAG = 0;
 	
+	public Simulation() {
+		lActiveNode = null;
+		_lLogger = null;
+		lMessage = null;
+		numNodes = 1;
+	}
+
 	public void setActiveNode(Node pActiveNode) {
 		this.lActiveNode = pActiveNode;
 	}
 	
-	public Simulation() {
-		
+	public void setNumNodes(int pNumNodes) {
+		this.numNodes = pNumNodes;
 	}
 	
 	public void testSimulator() {
@@ -43,7 +51,7 @@ public class Simulation implements Runnable, Observable {
 			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration
-				lMessage = lActiveNode.processMessage();
+				lMessage = lActiveNode.processMessage(numNodes);
 				//Pass lMessage back to the UI
 				this.notifyObservers();
 				Thread.sleep(1000);
@@ -51,7 +59,7 @@ public class Simulation implements Runnable, Observable {
 		} catch (Exception ex) {
 			try {
 				// Wait for listener to finish its debugging I/O
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
 				_lLogger.info("Simulation stopped");
@@ -64,7 +72,7 @@ public class Simulation implements Runnable, Observable {
 		} finally {
 			try {
 				// Wait for listener to finish its debugging I/O
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 				if (null != this.lActiveNode) {
 					this.lActiveNode.stopListeners();
 					lActiveNode = null;

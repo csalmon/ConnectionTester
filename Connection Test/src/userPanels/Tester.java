@@ -74,6 +74,7 @@ public class Tester extends JPanel implements ActionListener, Observer {
 			
 			if(simulationThread == null || simulationThread.getState() == Thread.State.NEW) {
 				simulation.setActiveNode(this.configFile.getActiveNode());
+				simulation.setNumNodes(this.configFile.size());
 				simulationThread = new Thread(simulation);
 				simulationThread.start();
 			
@@ -108,7 +109,5 @@ public class Tester extends JPanel implements ActionListener, Observer {
 
 	@Override
 	public void update(Message message, int flag) {
-		// TODO Auto-generated method stub
-		
 	}
 }

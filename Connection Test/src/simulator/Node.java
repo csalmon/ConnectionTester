@@ -24,7 +24,10 @@ public class Node {
 	private ArrayList<Thread> listenerThreads;
 	private ArrayList<Initiator> initiators;
 	private MessageQueue messages;
-	private Logger _logger = Logger.getLogger(Node.class);;
+	private Logger _logger = Logger.getLogger(Node.class);
+	int numRecvMessages;
+	int inactiveTimer;
+	int inactiveTimerCount;
 	
 	public Node (String pFileVersion) {
 		this.nID = UUID.randomUUID();
@@ -41,6 +44,9 @@ public class Node {
 		this.listenerThreads = new ArrayList<Thread>();
 		this.initiators = new ArrayList<Initiator>();
 		this.messages = new MessageQueue();
+		this.numRecvMessages = 0;
+		this.inactiveTimer = 0;
+		this.inactiveTimerCount = 0;
 	}
 
 	public UUID getNID() {
@@ -157,17 +163,19 @@ public class Node {
 		this._logger.debug("Listeners have been activated.");
 	}
 	
-	public Message processMessage() {
+	public Message processMessage(int pNumNodes) {
 		
 		// Dequeue a message (if one exists), if not create a new one
 		Message lMessage = messages.dequeue();
 		if (null == lMessage) {
-			lMessage = new Message(this.fileVersion);
-			lMessage.addNodeID(this.nID);
-			this._logger.debug("New message created");
+			lMessage = createNewMessage();
+		} else if (this.numRecvMessages > pNumNodes) {
+			lMessage = createNewMessage();
+			this.numRecvMessages = 0;
 		} else {
 			// Update message (add current node ID)
 			lMessage = updateMessage(lMessage);
+			this.numRecvMessages++;
 		}
 
 		// For every initiator send out the updated message
@@ -191,9 +199,37 @@ public class Node {
 		}
 	}
 	
+	
+	public void setInactiveTimerCount(int pTimerCount) {
+		this.inactiveTimerCount = pTimerCount;
+	}
+	
+	public int getInactiveTimerCount() {
+		return(this.inactiveTimerCount);
+	}
+	
+	public int getInactiveTimer() {
+		return(this.inactiveTimer);
+	}
+	
+	public void resetInactiveTimer() {
+		this.inactiveTimer = this.inactiveTimerCount;
+	}
+	
+	public void inactiveTimerTick() {
+		this.inactiveTimer--;
+	}
+	
 	private Message updateMessage(Message pMessage) {
 		
 		pMessage.addNodeID(this.nID);
 		return(pMessage);
+	}
+	
+	private Message createNewMessage() {
+		Message lMessage = new Message(this.fileVersion);
+		lMessage.addNodeID(this.nID);
+		this._logger.info("New message created");
+		return(lMessage);
 	}
 }

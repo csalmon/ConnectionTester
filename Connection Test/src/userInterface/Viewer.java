@@ -151,11 +151,17 @@ public class Viewer extends JPanel implements Observer{
 			for(int index = 0; index < nodeNameLabels.size(); index++) {
 				
 				if(nodeNameLabels.get(index).getText().compareTo(activeNodeName) == 0) {
+					this.configFile.get(id).resetInactiveTimer();
 					nodeStatusLabels.get(index).setText("Active");
 					nodeStatusLabels.get(index).setForeground(Color.green);
+				} else {
+					this.configFile.get(id).inactiveTimerTick();
+					if (this.configFile.get(id).getInactiveTimer() <= 0) {
+						nodeStatusLabels.get(index).setText("Inactive");
+						nodeStatusLabels.get(index).setForeground(Color.black);
+					}
 				}
 			}
 		}
 	}
-
 }

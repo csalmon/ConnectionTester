@@ -45,6 +45,7 @@ public class NetworkConfig {
             this.nodes = loadedNodes.getNodes();
             this.activeNode = null;
             setActiveNode();
+            setInactiveTimer();
             this.fileVersion = loadedNodes.getFileVersion();
             this.approved = loadedNodes.getApproval();
         } catch (Exception ex) {
@@ -253,6 +254,13 @@ public class NetworkConfig {
     	} catch (Exception ex) {
     		ex.printStackTrace();
     		return(null);
+    	}
+    }
+    
+    private void setInactiveTimer() {
+    	for (int index = 0; index < this.nodes.size(); index++) {
+    		this.nodes.get(index).setInactiveTimerCount(this.nodes.size() * 3);
+    		this.nodes.get(index).resetInactiveTimer();
     	}
     }
 }
