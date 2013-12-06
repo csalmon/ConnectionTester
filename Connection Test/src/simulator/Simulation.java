@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	Node lActiveNode = null;
-	Logger _lLogger = Logger.getLogger(Simulation.class);
+	Logger _lLogger = null;//Logger.getLogger(Simulation.class);
 	Message lMessage = null;
 	final int UNUSED_FLAG = 0;
 	
@@ -25,6 +25,7 @@ public class Simulation implements Runnable, Observable {
 	public void testSimulator() {
 		
 		try {
+			_lLogger = Logger.getLogger(Simulation.class);
 			if (null == this.lActiveNode) {
 				_lLogger.info("No active node defined.  Unable to run simulation.");
 				return;
