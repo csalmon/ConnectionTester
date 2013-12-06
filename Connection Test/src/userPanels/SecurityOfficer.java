@@ -18,9 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import observation.Observer;
-import simulator.ContactInfo;
 import simulator.Message;
-import simulator.Node;
 
 public class SecurityOfficer extends JPanel implements ActionListener, Observer {
 	private static final long serialVersionUID = 1L;

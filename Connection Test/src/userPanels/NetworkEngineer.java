@@ -18,8 +18,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
 
-import org.apache.log4j.Logger;
-
 import fileIO.NetworkConfig;
 import fileIO.XMLWriter;
 import observation.Observable;

@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import org.apache.log4j.Logger;
-
 import observation.Observable;
 import observation.Observer;
 
