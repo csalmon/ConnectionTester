@@ -6,11 +6,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -24,6 +26,7 @@ import observation.Observable;
 import observation.Observer;
 import simulator.Message;
 import simulator.Node;
+import userInterface.NodeCreationPanel;
 
 
 public class NetworkEngineer extends JPanel implements ActionListener, Observer, Observable {
@@ -169,18 +172,31 @@ public class NetworkEngineer extends JPanel implements ActionListener, Observer,
 				JOptionPane.showMessageDialog(null, "You cannot add a node to.. nothing. Create a Network Config File or load one to continue.");
 				return;
 			}
-			String newName= JOptionPane.showInputDialog ( "Enter node name:" );
-			Node newNode = new Node(newName);
-			JOptionPane.showMessageDialog(null, "This feature is unimplemented because we did not carry out our design with the intent to\n"
-					+ "*make* network config file--it was assummed that the XML file would be supplied due to the numerous nodes that could be in a network.\n"
-					+ "Therefore, not implementing this use case is more in line with our design choices than implementing it.\n"
-					+ "Oh, the irony.");
+			
+			NodeCreationPanel nodeCreationPanel = new NodeCreationPanel();
+			
+			int choice = JOptionPane.showConfirmDialog(null, nodeCreationPanel, "Enter new node info", JOptionPane.OK_CANCEL_OPTION);
+			
+			if (choice == JOptionPane.OK_OPTION) {
+				Node newNode = nodeCreationPanel.getCreatedNode();
+				this.configFile.add(newNode);
+				System.out.println("Node " + newNode.getName() + " created!");
+			} else  {
+				System.out.println("Node creation cancelled.");
+			}
+
+		      
+			
+//			JOptionPane.showMessageDialog(null, "This feature is unimplemented because we did not carry out our design with the intent to\n"
+//					+ "*make* network config file--it was assummed that the XML file would be supplied due to the numerous nodes that could be in a network.\n"
+//					+ "Therefore, not implementing this use case is more in line with our design choices than implementing it.\n"
+//					+ "Oh, the irony.");
 			
 			//NOTIFY ANY OBSERVER THAT MY NETWORK CONFIG FILE HAS CHANGED.
 			//this.notifyObservers();
 			
 		} catch(Exception e) {
-			JOptionPane.showMessageDialog(null, "There was a mistake adding the new node. Click 'Start New File' first.");
+			JOptionPane.showMessageDialog(null, "You did not fill out the new Node properly. Bummer.");
 		}
 
 	}
