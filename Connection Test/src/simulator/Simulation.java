@@ -9,10 +9,16 @@ import org.apache.log4j.Logger;
 
 public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
+<<<<<<< HEAD
 	Node lActiveNode;
 	Logger _lLogger;
 	Message lMessage;
 	int numNodes;
+=======
+	Node lActiveNode = null;
+	Logger _lLogger = null;//Logger.getLogger(Simulation.class);
+	Message lMessage = null;
+>>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 	final int UNUSED_FLAG = 0;
 	
 	public Simulation() {
@@ -31,23 +37,20 @@ public class Simulation implements Runnable, Observable {
 	}
 	
 	public void testSimulator() {
+		
 		try {
+			_lLogger = Logger.getLogger(Simulation.class);
 			if (null == this.lActiveNode) {
-				this._lLogger.info("No active node defined.  Unable to run simulation.");
-				System.out.println("No active node defined.  Unable to run simulation.");
+				_lLogger.info("No active node defined.  Unable to run simulation.");
 				return;
 			}
 			
-			this._lLogger = Logger.getLogger(Simulation.class);
-			
 			// Activate Node Listeners
 			this.lActiveNode.startListeners();
-			this._lLogger.info("Listeners activated");
-			//System.out.println("Listeners activated");
+			_lLogger.info("Listeners activated");
 			
 			// Process the active node while the simulation is running
-			this._lLogger.info("Beginning Simulation");
-			//System.out.println("Beginning Simulation");
+			_lLogger.info("Beginning Simulation");
 			lMessage = new Message();
 			while (!Thread.currentThread().isInterrupted() ) {
 				// Process messages for the active (local) node identified from the NetworkConfiguration
@@ -59,11 +62,14 @@ public class Simulation implements Runnable, Observable {
 		} catch (Exception ex) {
 			try {
 				// Wait for listener to finish its debugging I/O
+<<<<<<< HEAD
 				//Thread.sleep(1000);
+=======
+				//Thread.sleep(500);
+>>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
 				_lLogger.info("Simulation stopped");
-				System.out.println("Simulation stopped");
 				_lLogger = null;
 			} catch (Exception iex) {
 				ex.printStackTrace();
@@ -72,7 +78,11 @@ public class Simulation implements Runnable, Observable {
 		} finally {
 			try {
 				// Wait for listener to finish its debugging I/O
+<<<<<<< HEAD
 				//Thread.sleep(1000);
+=======
+				//Thread.sleep(500);
+>>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 				if (null != this.lActiveNode) {
 					this.lActiveNode.stopListeners();
 					lActiveNode = null;
@@ -80,7 +90,6 @@ public class Simulation implements Runnable, Observable {
 				
 				if (null != _lLogger) {
 					_lLogger.info("Simulation ended");
-					System.out.println("Simulation ended");
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
