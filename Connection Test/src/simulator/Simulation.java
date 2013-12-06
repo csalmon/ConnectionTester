@@ -9,16 +9,10 @@ import org.apache.log4j.Logger;
 
 public class Simulation implements Runnable, Observable {
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
-<<<<<<< HEAD
 	Node lActiveNode;
 	Logger _lLogger;
 	Message lMessage;
 	int numNodes;
-=======
-	Node lActiveNode = null;
-	Logger _lLogger = null;//Logger.getLogger(Simulation.class);
-	Message lMessage = null;
->>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 	final int UNUSED_FLAG = 0;
 	
 	public Simulation() {
@@ -62,11 +56,7 @@ public class Simulation implements Runnable, Observable {
 		} catch (Exception ex) {
 			try {
 				// Wait for listener to finish its debugging I/O
-<<<<<<< HEAD
 				//Thread.sleep(1000);
-=======
-				//Thread.sleep(500);
->>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 				this.lActiveNode.stopListeners();
 				lActiveNode = null;
 				_lLogger.info("Simulation stopped");
@@ -78,11 +68,7 @@ public class Simulation implements Runnable, Observable {
 		} finally {
 			try {
 				// Wait for listener to finish its debugging I/O
-<<<<<<< HEAD
 				//Thread.sleep(1000);
-=======
-				//Thread.sleep(500);
->>>>>>> 47e989a29e1ebf09b6993da6f225d81ab08d17b9
 				if (null != this.lActiveNode) {
 					this.lActiveNode.stopListeners();
 					lActiveNode = null;
