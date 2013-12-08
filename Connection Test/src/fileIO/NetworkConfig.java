@@ -194,7 +194,7 @@ public class NetworkConfig {
         return "file:" + path;
     }
     
-    private void setActiveNode() {
+    public void setActiveNode() {
     	try {
 	    	ArrayList<InetAddress> netDeviceIPs = new ArrayList<InetAddress>();
 	    	Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();

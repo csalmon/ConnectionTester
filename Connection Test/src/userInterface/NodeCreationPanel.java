@@ -10,15 +10,26 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 
+import enums.NodeState;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import simulator.ContactInfo;
+import simulator.Initiator;
+import simulator.Listener;
+import simulator.MessageQueue;
 import simulator.Node;
+
 import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 public class NodeCreationPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +49,7 @@ public class NodeCreationPanel extends JPanel implements ActionListener {
 	JButton addListenerBtn = null;
 	JButton addInitiatorBtn = null;
 	JButton showListInitiatBtn = null;
+	JButton btnSaveNode = null;
 	private JTextField listIPField;
 	private JTextField listPortField;
 	private JTextField initFromPortField;
@@ -45,6 +57,7 @@ public class NodeCreationPanel extends JPanel implements ActionListener {
 	private JTextField initToPortField;
 	
 	Node newNode = null;
+	NodeState state = null;
 	
 	public NodeCreationPanel() {
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -53,6 +66,10 @@ public class NodeCreationPanel extends JPanel implements ActionListener {
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(130dlu;default)"),},
 			new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
@@ -156,6 +173,11 @@ public class NodeCreationPanel extends JPanel implements ActionListener {
 		lblPort_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPort_1.setToolTipText("This is the port that the listening machine will listen for the message on.");
 		add(lblPort_1, "2, 32, right, default");
+		
+		JLabel lblpressTheSave = new JLabel("*Press the Save Button below before pressing OK*");
+		lblpressTheSave.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblpressTheSave.setForeground(Color.RED);
+		add(lblpressTheSave, "4, 40");
 	}
 	
 	private void addtextFields() {
@@ -218,41 +240,122 @@ public class NodeCreationPanel extends JPanel implements ActionListener {
 		showListInitiatBtn = new JButton("Show Current Listeners & Initiators");
 		showListInitiatBtn.addActionListener(this);
 		add(showListInitiatBtn, "4, 38");
+		
+		btnSaveNode = new JButton("SAVE NODE INFO");
+		btnSaveNode.addActionListener(this);
+		add(btnSaveNode, "4, 42");
 
 	}
 	
 	private void addListener() {
+		InetAddress convertedExtIP = null;
+		InetAddress convertedListIP = null;
+		int port = 0;
+		try {
+			convertedExtIP = InetAddress.getByName(eIPField.getText());
+			convertedListIP = InetAddress.getByName(listIPField.getText());
+			port = Integer.parseInt(listPortField.getText());
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(null, "Didn't work. Reasons:\n- Didn't have an external IP typed in the initial info or\n- Didn't have a Listener IP typed");
+			return;
+		}
+			
+		InetSocketAddress initiatorAddress = new InetSocketAddress(convertedExtIP, port);
+		InetSocketAddress listenerAddress = new InetSocketAddress(convertedListIP, port);
 		
+		Listener newListener = new Listener(initiatorAddress, listenerAddress, new MessageQueue());
+		this.newNode.addListener(newListener);
+		JOptionPane.showMessageDialog(null, "Listener added!");
 	}
 	
 	private void addInitiator() {
+		InetAddress convertedExtIP = null;
+		InetAddress convertedListIP = null;
+		int initPort = 0;
+		int listPort = 0;
+		try {
+			convertedExtIP = InetAddress.getByName(eIPField.getText());
+			convertedListIP = InetAddress.getByName(initToIPField.getText());
+			initPort = Integer.parseInt(initFromPortField.getText());
+			listPort = Integer.parseInt(initToPortField.getText());
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(null, "At least one of the IPs in the initiator data entry fields was not resolvable.");
+			return;
+		}
+			
+		InetSocketAddress initiatorAddress = new InetSocketAddress(convertedExtIP, initPort);
+		InetSocketAddress listenerAddress = new InetSocketAddress(convertedListIP, listPort);
+		
+		Initiator newInitiator = new Initiator(initiatorAddress, listenerAddress);
+		this.newNode.addInitiator(newInitiator);
+		JOptionPane.showMessageDialog(null, "Initiator added!");
 			
 	}
 	
 	private void showListenersAndInitiators() {
-		
+		JOptionPane.showMessageDialog(null, "Well, aren't you thorough.\nI didn't want to do this, so it is not done.\n"
+				+ "To verify Listener & Initiator, save the file after adding the node and see if the initiator/listener\n"
+				+ "is there. I assure you that it will be.");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if(e.getSource() == addListenerBtn ) {			
 			System.out.println("Pressed ADD LISTENER button");
-			this.addListener();
-		
+			if(!listIPField.getText().trim().equals("") || !listPortField.getText().trim().equals("") ) {
+				this.addListener();
+			} else {
+				JOptionPane.showMessageDialog(null, "Hey, you didn't fill that Listener out right. No Listener added.");
+			}
+			listIPField.setText("");
+			listPortField.setText("");
+			
 		} else if(e.getSource() == addInitiatorBtn) {
 			System.out.println("Pressed ADD INITIATOR button");
-			this.addInitiator();
+			if(!initFromPortField.getText().trim().equals("") || !initToIPField.getText().trim().equals("") || !initToPortField.getText().trim().equals("")) {
+				this.addInitiator();
+			} else {
+				JOptionPane.showMessageDialog(null, "Hey, you didn't fill that Initiator out right. No Initiator added.");
+			}
+			initFromPortField.setText("");
+			initToIPField.setText("");
+			initToPortField.setText("");
 			
-		} else {			
+		} else if(e.getSource() == showListInitiatBtn) {			
 			System.out.println("Pressed Show Current Listeners & Initiators button");
 			this.showListenersAndInitiators();
 			
+		} else if(e.getSource() == btnSaveNode) {
+			ContactInfo contactInfo = new ContactInfo();
+			contactInfo.setOrganization(conOrgField.getText());
+			contactInfo.setContactPerson(conPersonField.getText());
+			contactInfo.setContactPhone(conPhoneField.getText());
+			
+			this.newNode.setContactInfo(contactInfo);
+			this.newNode.setName(nameField.getText());
+			
+			InetAddress convertedExtIP = null;
+			InetAddress convertedIntIP = null;
+			try {
+				convertedExtIP = InetAddress.getByName(eIPField.getText());
+				convertedIntIP = InetAddress.getByName(iIPField.getText());
+			} catch (UnknownHostException ex) {
+				JOptionPane.showMessageDialog(null, "The external/internal IP was not resolvable.");
+				return;
+			}
+			
+			this.newNode.addExternalIP(convertedExtIP);
+			this.newNode.addInternalIP(convertedIntIP);
+			this.newNode.setState(state.ACTIVE);
+			JOptionPane.showMessageDialog(null, "Node saved!");
 		}
 		
 	}
 	
 	public Node getCreatedNode() {
-		return null;
+		System.out.println(this.newNode.getName() + " " + this.newNode.getContactInfo().toString());
+		return this.newNode;
 	}
 	
 

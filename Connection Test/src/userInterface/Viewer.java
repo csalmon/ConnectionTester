@@ -87,18 +87,17 @@ public class Viewer extends JPanel implements Observer{
 	//I realize this code is a bit of a hack because the magic numbers. I'm a bit stuck thogh because the form layout requires explicit declaration of rows/cols
 	//or else it doesn't allow me to use the 'Design' tab at will--I'd have to run the program to see the results of my code each time. Too tedious at the moment.
 	private void populateLabelLists() {
-		//set all nodes to invisbile
+		//set all nodes to invisible
 		for (int index = 0; index < nodeNameLabels.size(); index++) {
 			nodeNameLabels.get(index).setVisible(false);
 			nodeStatusLabels.get(index).setVisible(false);
 		}
 		
-		//this.repaint();
-		
 		int col = 2;
 		int row = 4;
 		Node activeNode = this.configFile.getActiveNode();
 		for(int index = 0; index < numNodesInSimulation; index++) {
+			
 			Node currentNode = this.configFile.get(index);
 			System.out.println("Populating VIEWER with this node: " + currentNode.getName());
 			
@@ -120,9 +119,9 @@ public class Viewer extends JPanel implements Observer{
 			nodeStatusLabels.add(nodeStatusLabel);
 			nodeStatusLocations.add(nodeStatusLoc);
 			
-			add( nodeNameLabel, nodeNameLoc );
-			add( nodeStatusLabel, nodeStatusLoc );
-
+			this.add( nodeNameLabel, nodeNameLoc );
+			this.add( nodeStatusLabel, nodeStatusLoc );
+			
 			if( (row+3) > 17) {
 				col+=2;
 				row = 4;
@@ -147,7 +146,7 @@ public class Viewer extends JPanel implements Observer{
 		
 		for(UUID id : activeUUIDs) {
 			String activeNodeName = this.configFile.get(id).getName();
-			
+			System.out.println("THIS IS AN ACTIVE NODE: " + activeNodeName);
 			for(int index = 0; index < nodeNameLabels.size(); index++) {
 
 				if(nodeNameLabels.get(index).getText().compareTo(activeNodeName) == 0) {
