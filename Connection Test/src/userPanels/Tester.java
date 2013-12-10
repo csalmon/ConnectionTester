@@ -75,6 +75,9 @@ public class Tester extends JPanel implements ActionListener, Observer {
 			if(simulationThread == null || simulationThread.getState() == Thread.State.NEW) {
 				simulation.setActiveNode(this.configFile.getActiveNode());
 				simulation.setNumNodes(this.configFile.size());
+				for (int index = 0; index < this.configFile.size(); index++) {
+					this.configFile.get(index).resetInactiveTimer();
+				}
 				simulationThread = new Thread(simulation);
 				simulationThread.start();
 			

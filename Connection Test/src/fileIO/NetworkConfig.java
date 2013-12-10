@@ -24,7 +24,8 @@ public class NetworkConfig {
 	private String fileVersion;
 	private ArrayList<Node> nodes;
 	private Node activeNode;
-
+    private final int INACTIVE_MULTIPLIER = 2;
+    
     public NetworkConfig(String pFileName) {
         try {
             // obtain and configure a SAX based parser
@@ -259,7 +260,7 @@ public class NetworkConfig {
     
     private void setInactiveTimer() {
     	for (int index = 0; index < this.nodes.size(); index++) {
-    		this.nodes.get(index).setInactiveTimerCount(this.nodes.size() * 3);
+    		this.nodes.get(index).setInactiveTimerCount(this.nodes.size() * INACTIVE_MULTIPLIER);
     		this.nodes.get(index).resetInactiveTimer();
     	}
     }

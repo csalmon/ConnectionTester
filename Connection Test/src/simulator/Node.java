@@ -170,8 +170,14 @@ public class Node {
 		if (null == lMessage) {
 			lMessage = createNewMessage();
 		} else if (this.numRecvMessages > pNumNodes) {
-			lMessage = createNewMessage();
-			this.numRecvMessages = 0;
+			try {
+				//Thread.sleep(pNumNodes * 1000);
+				messages.clear();
+				lMessage = createNewMessage();
+				this.numRecvMessages = 0;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		} else {
 			// Update message (add current node ID)
 			lMessage = updateMessage(lMessage);

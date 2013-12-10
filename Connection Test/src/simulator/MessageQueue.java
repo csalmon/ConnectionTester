@@ -22,4 +22,8 @@ public class MessageQueue {
 	public boolean isEmpty() {
 		return(0 == messages.size());
 	}
+	
+	public void clear() {
+		this.messages.clear();
+	}
 }

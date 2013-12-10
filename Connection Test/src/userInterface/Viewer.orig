@@ -153,22 +153,13 @@ public class Viewer extends JPanel implements Observer{
 					this.configFile.get(id).resetInactiveTimer();
 					nodeStatusLabels.get(index).setText("Active");
 					nodeStatusLabels.get(index).setForeground(Color.green);
-				} 
-			}
-		}
-		for (int index = 0; index < this.configFile.size(); index++) {
-			UUID nID = this.configFile.get(index).getNID();
-			String nodeName = this.configFile.get(nID).getName();
-			if (!activeUUIDs.contains(nID)) {
-				this.configFile.get(nID).inactiveTimerTick();
-				if (this.configFile.get(nID).getInactiveTimer() <= 0) {
-					for(int nameIndex = 0; nameIndex < nodeNameLabels.size(); nameIndex++) {
-						if(nodeNameLabels.get(nameIndex).getText().compareTo(nodeName) == 0) {
-							nodeStatusLabels.get(index).setText("Inactive");
-							nodeStatusLabels.get(index).setForeground(Color.black);
-						} 
+				} else {
+					this.configFile.get(id).inactiveTimerTick();
+					if (this.configFile.get(id).getInactiveTimer() <= 0) {
+						nodeStatusLabels.get(index).setText("Inactive");
+						nodeStatusLabels.get(index).setForeground(Color.black);
 					}
-				}	
+				}
 			}
 		}
 	}
